@@ -622,11 +622,15 @@
     const GOAL_AMOUNT = GOAL_FAMILIES * COST_PER_FAMILY;
 
     async function initDashboard() {
-        // Fetch live data from data.json (with cache-busting)
+        // Fetch live data from GitHub API (no cache delay)
         let data = { familiesSupported: 0, lastUpdated: "--" };
         try {
-            const resp = await fetch('https://raw.githubusercontent.com/mtokons/sadaka/main/data.json?t=' + Date.now());
-            data = await resp.json();
+            const resp = await fetch('https://api.github.com/repos/mtokons/sadaka/contents/data.json?ref=main&t=' + Date.now(), {
+                headers: { 'Accept': 'application/vnd.github.v3+json' },
+                cache: 'no-store'
+            });
+            const fileInfo = await resp.json();
+            data = JSON.parse(atob(fileInfo.content));
         } catch (e) {
             console.error('Failed to load data.json:', e);
         }
