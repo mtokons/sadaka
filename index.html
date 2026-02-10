@@ -35,10 +35,10 @@
 
         /* Islamic Pattern Header */
         .hero {
-            background: linear-gradient(135deg, var(--dark-green) 0%, #0d3d1a 50%, var(--dark-green) 100%);
+            background: linear-gradient(180deg, #1a5c2a 0%, #17501f 40%, #1a5c2a 100%);
             color: var(--white);
             text-align: center;
-            padding: 40px 20px 50px;
+            padding: 0;
             position: relative;
             overflow: hidden;
         }
@@ -50,49 +50,118 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c8a94e' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            opacity: 0.5;
+            background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c8a94e' fill-opacity='0.07'%3E%3Cpath d='M20 0L40 20L20 40L0 20z M20 5L35 20L20 35L5 20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* Golden Islamic arch frame */
+        .hero-frame {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px 20px 0;
+        }
+
+        .arch-container {
+            background: linear-gradient(180deg, #fdf8ef 0%, #f5ecd6 60%, #ede0c0 100%);
+            border: 3px solid var(--gold);
+            border-radius: 0 0 0 0;
+            padding: 35px 25px 30px;
+            position: relative;
+            clip-path: polygon(0% 12%, 5% 5%, 15% 1%, 30% 0%, 50% 0%, 70% 0%, 85% 1%, 95% 5%, 100% 12%, 100% 100%, 0% 100%);
+        }
+
+        .arch-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23c8a94e' fill-opacity='0.06'%3E%3Cpath d='M25 0L50 25L25 50L0 25z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .arch-container::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 1px solid rgba(200,169,78,0.3);
+            clip-path: polygon(0% 12%, 5% 5%, 15% 1.5%, 30% 0.5%, 50% 0.5%, 70% 0.5%, 85% 1.5%, 95% 5%, 100% 12%, 100% 100%, 0% 100%);
+            pointer-events: none;
+        }
+
+        .gold-border-top {
+            width: 80%;
+            max-width: 400px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 0 auto 15px;
+        }
+
+        .ramadan-calligraphy {
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 5px;
+            line-height: 1.2;
+        }
+
+        .ramadan-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.8rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
         }
 
         .hero-content {
             position: relative;
-            z-index: 1;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .crescent {
-            font-size: 60px;
-            margin-bottom: 10px;
-            color: var(--gold);
+            z-index: 2;
         }
 
         .hero h1 {
-            font-size: 2.2rem;
+            font-size: 1.9rem;
             font-weight: 800;
-            color: var(--gold-light);
-            margin-bottom: 8px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            color: #2c1810;
+            margin-bottom: 6px;
+            line-height: 1.3;
+            text-shadow: none;
+        }
+
+        .hero h1 .gold-text {
+            color: var(--gold);
         }
 
         .hero h2 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--sand);
-            margin-bottom: 5px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1a5c2a;
+            margin-bottom: 12px;
         }
 
         .hero .subtitle {
-            font-size: 1rem;
-            color: rgba(255,255,255,0.85);
-            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 5px;
         }
 
         .hero .subtitle-de {
             font-family: 'Poppins', sans-serif;
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.7);
+            font-size: 0.8rem;
+            color: #888;
             font-style: italic;
+            margin-bottom: 0;
+        }
+
+        /* Bottom section with mosque */
+        .hero-bottom {
+            position: relative;
+            z-index: 1;
+            padding: 20px 20px 15px;
         }
 
         /* Live Badge */
@@ -100,14 +169,14 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(255,0,0,0.2);
-            border: 1px solid rgba(255,0,0,0.4);
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
             padding: 6px 16px;
             border-radius: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             font-family: 'Poppins', sans-serif;
-            font-size: 0.85rem;
-            color: #ff6b6b;
+            font-size: 0.8rem;
+            color: #fff;
         }
 
         .live-dot {
@@ -116,6 +185,30 @@
             background: #ff4444;
             border-radius: 50%;
             animation: pulse 1.5s infinite;
+        }
+
+        /* Mosque silhouette */
+        .mosque-silhouette {
+            position: relative;
+            height: 60px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .mosque-silhouette svg {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 600px;
+            opacity: 0.25;
+        }
+
+        /* Desert/sand bottom gradient */
+        .hero-sand {
+            height: 30px;
+            background: linear-gradient(180deg, var(--dark-green) 0%, #c8a54e 60%, var(--sand) 100%);
         }
 
         @keyframes pulse {
@@ -461,8 +554,10 @@
 
         /* Responsive */
         @media (max-width: 600px) {
-            .hero h1 { font-size: 1.6rem; }
-            .hero h2 { font-size: 1.1rem; }
+            .hero h1 { font-size: 1.4rem; }
+            .hero h2 { font-size: 1rem; }
+            .arch-container { padding: 25px 15px 20px; }
+            .ramadan-calligraphy { font-size: 2rem; }
             .progress-stats { grid-template-columns: 1fr; gap: 10px; }
             .stat-box { padding: 12px; }
             .progress-card { padding: 20px; }
@@ -481,18 +576,33 @@
 
     <!-- ===== HERO SECTION ===== -->
     <header class="hero">
-        <div class="hero-content">
-            <div class="crescent">☪</div>
-            <h1>১,০০০ পরিবারকে ইফতার পৌঁছানো</h1>
-            <h2>এবারের রমজানে আপনার সাহায্য দরকার</h2>
-            <p class="subtitle">বাংলাদেশের রোজাদার পরিবারগুলোর জন্য ইফতার সামগ্রী বিতরণ</p>
-            <p class="subtitle-de">Iftar-Pakete für 1.000 bedürftige Familien in Bangladesch</p>
+        <div class="hero-frame">
+            <div class="arch-container">
+                <div class="hero-content">
+                    <div class="ramadan-calligraphy">☪</div>
+                    <div class="ramadan-text">Ramadan Kareem</div>
+                    <div class="gold-border-top"></div>
+                    <h1><span class="gold-text">১,০০০</span> পরিবারকে ইফতার<br>পৌঁছানো এবারের লক্ষ্য</h1>
+                    <h2>এবারের রমজানে আপনার সাহায্য দরকার</h2>
+                    <div class="gold-border-top"></div>
+                    <p class="subtitle">বাংলাদেশের রোজাদার পরিবারগুলোর জন্য ইফতার সামগ্রী বিতরণ</p>
+                    <p class="subtitle-de">Iftar-Pakete für 1.000 bedürftige Familien in Bangladesch</p>
+                </div>
+            </div>
+        </div>
+        <div class="hero-bottom">
             <div class="live-badge">
                 <div class="live-dot"></div>
                 LIVE DONATION TRACKER
             </div>
+            <div class="mosque-silhouette">
+                <svg viewBox="0 0 800 100" fill="rgba(255,255,255,0.2)">
+                    <path d="M0,100 L0,70 L30,70 L30,50 L35,45 L40,50 L40,70 L80,70 L80,60 L100,40 L110,35 L115,20 L120,35 L130,40 L150,60 L150,70 L200,70 L200,55 L210,45 L215,15 L217,10 L219,5 L220,3 L221,5 L223,10 L225,15 L230,45 L240,55 L240,70 L300,70 L310,65 L320,70 L380,70 L390,50 L395,45 L398,20 L400,10 L402,20 L405,45 L410,50 L420,70 L480,70 L490,65 L500,70 L560,70 L560,55 L570,45 L575,15 L577,10 L579,5 L580,3 L581,5 L583,10 L585,15 L590,45 L600,55 L600,70 L650,70 L650,60 L670,40 L680,35 L685,20 L690,35 L700,40 L720,60 L720,70 L760,70 L760,50 L765,45 L770,50 L770,70 L800,70 L800,100 Z"/>
+                </svg>
+            </div>
         </div>
     </header>
+    <div class="hero-sand"></div>
 
     <!-- ===== PROGRESS SECTION ===== -->
     <section class="progress-section">
