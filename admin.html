@@ -380,10 +380,13 @@
         try {
             // Get current file SHA
             const fileResp = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${DATA_FILE}?ref=${BRANCH}`, {
-                headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+                headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github.v3+json' }
             });
 
-            if (!fileResp.ok) throw new Error('Failed to get file info. Check your token permissions.');
+            if (!fileResp.ok) {
+                const errData = await fileResp.json().catch(() => ({}));
+                throw new Error('Failed to get file info: ' + (errData.message || fileResp.status));
+            }
             const fileInfo = await fileResp.json();
 
             // Update file
@@ -392,7 +395,7 @@
             const updateResp = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${DATA_FILE}`, {
                 method: 'PUT',
                 headers: {
-                    'Authorization': `token ${token}`,
+                    'Authorization': `Bearer ${token}`,
                     'Accept': 'application/vnd.github.v3+json',
                     'Content-Type': 'application/json'
                 },
@@ -404,7 +407,10 @@
                 })
             });
 
-            if (!updateResp.ok) throw new Error('Failed to update. Check token permissions (needs "repo" scope).');
+            if (!updateResp.ok) {
+                const errData = await updateResp.json().catch(() => ({}));
+                throw new Error('Failed to update: ' + (errData.message || updateResp.status));
+            }
 
             document.getElementById('successMsg').classList.remove('hidden');
             loadCurrentData();
