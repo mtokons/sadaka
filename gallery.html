@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>গ্যালারি | Sadaka - Ramadan Iftar Campaign</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700;800&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c8a94e;
+            --gold-light: #f0d98c;
+            --dark-green: #1a5c2a;
+            --green: #2d8a4e;
+            --light-green: #e8f5e9;
+            --dark: #1a1a2e;
+            --white: #ffffff;
+            --cream: #fdf6e3;
+            --sand: #f5e6c8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans Bengali', 'Poppins', sans-serif;
+            background: var(--cream);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: #0d3d1a;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .nav-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .nav-brand {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--gold-light);
+            text-decoration: none;
+            padding: 12px 0;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 5px;
+        }
+
+        .nav-links a {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.75);
+            text-decoration: none;
+            padding: 12px 18px;
+            border-radius: 6px 6px 0 0;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold-light);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .nav-links a.active {
+            color: var(--gold-light);
+            background: var(--dark-green);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20%;
+            right: 20%;
+            height: 3px;
+            background: var(--gold);
+            border-radius: 3px 3px 0 0;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--dark-green) 0%, #0d3d1a 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23c8a94e' fill-opacity='0.07'%3E%3Cpath d='M20 0L40 20L20 40L0 20z M20 5L35 20L20 35L5 20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .page-header h1 {
+            position: relative;
+            font-size: 1.8rem;
+            color: var(--gold-light);
+            margin-bottom: 5px;
+        }
+
+        .page-header p {
+            position: relative;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Gallery Grid */
+        .gallery-section {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-item {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            background: white;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-item .caption {
+            padding: 12px 15px;
+            font-size: 0.85rem;
+            color: #555;
+        }
+
+        .gallery-item .caption .date {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.75rem;
+            color: #999;
+            margin-top: 3px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state .icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+
+        .empty-state h3 {
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .lightbox.open {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .lightbox-caption {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            text-align: center;
+            font-size: 0.95rem;
+            background: rgba(0,0,0,0.5);
+            padding: 10px 25px;
+            border-radius: 8px;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .loading .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e0e0e0;
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-green);
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 40px;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 600px) {
+            .gallery-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .gallery-item img { height: 150px; }
+            .gallery-item .caption { padding: 8px 10px; font-size: 0.8rem; }
+            .page-header h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-brand">☪ Sadaka</a>
+            <div class="nav-links">
+                <a href="index.html">🏠 Home</a>
+                <a href="gallery.html" class="active">📸 Gallery</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== PAGE HEADER ===== -->
+    <div class="page-header">
+        <h1>📸 আমাদের কার্যক্রম / Our Activities</h1>
+        <p>Photos from our Iftar distribution campaign</p>
+    </div>
+
+    <!-- ===== GALLERY ===== -->
+    <section class="gallery-section">
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            Loading photos...
+        </div>
+        <div class="gallery-grid" id="galleryGrid"></div>
+        <div class="empty-state" id="emptyState" style="display:none;">
+            <div class="icon">📷</div>
+            <h3>এখনো কোনো ছবি আপলোড হয়নি</h3>
+            <p>No photos uploaded yet. Activities photos will appear here soon.</p>
+        </div>
+    </section>
+
+    <!-- ===== LIGHTBOX ===== -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+        <img id="lightboxImg" src="" alt="">
+        <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <p>রমজান ইফতার ক্যাম্পেইন ২০২৬ | Ramadan Iftar Campaign 2026</p>
+        <p style="margin-top: 10px; font-size: 0.75rem;">🕌 জাযাকাল্লাহু খাইরান | JazakAllahu Khairan</p>
+    </footer>
+
+    <script>
+    const REPO_OWNER = "mtokons";
+    const REPO_NAME = "sadaka";
+    const BRANCH = "main";
+
+    async function loadGallery() {
+        const loading = document.getElementById('loading');
+        const grid = document.getElementById('galleryGrid');
+        const empty = document.getElementById('emptyState');
+
+        try {
+            // Fetch gallery.json
+            const resp = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/gallery.json?ref=${BRANCH}&t=${Date.now()}`, {
+                headers: { 'Accept': 'application/vnd.github.v3+json' },
+                cache: 'no-store'
+            });
+
+            if (!resp.ok) throw new Error('No gallery data');
+
+            const fileInfo = await resp.json();
+            const photos = JSON.parse(atob(fileInfo.content));
+
+            loading.style.display = 'none';
+
+            if (!photos.length) {
+                empty.style.display = 'block';
+                return;
+            }
+
+            photos.reverse().forEach((photo, i) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.onclick = () => openLightbox(photo.url, photo.caption);
+                item.innerHTML = `
+                    <img src="${photo.url}" alt="${photo.caption || 'Activity photo'}" loading="lazy">
+                    <div class="caption">
+                        ${photo.caption || ''}
+                        <div class="date">${photo.date || ''}</div>
+                    </div>
+                `;
+                grid.appendChild(item);
+            });
+
+        } catch (e) {
+            loading.style.display = 'none';
+            empty.style.display = 'block';
+        }
+    }
+
+    function openLightbox(src, caption) {
+        document.getElementById('lightboxImg').src = src;
+        document.getElementById('lightboxCaption').textContent = caption || '';
+        document.getElementById('lightbox').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeLightbox();
+    });
+
+    window.addEventListener('DOMContentLoaded', loadGallery);
+    </script>
+
+</body>
+</html>
