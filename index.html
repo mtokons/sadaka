@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>রমজান ইফতার ক্যাম্পেইন ২০২৬ | Ramadan Iftar Campaign</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700;800&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c8a94e;
+            --gold-light: #f0d98c;
+            --dark-green: #1a5c2a;
+            --green: #2d8a4e;
+            --light-green: #e8f5e9;
+            --dark: #1a1a2e;
+            --red: #c0392b;
+            --white: #ffffff;
+            --cream: #fdf6e3;
+            --sand: #f5e6c8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Bengali', 'Poppins', sans-serif;
+            background: var(--cream);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Islamic Pattern Header */
+        .hero {
+            background: linear-gradient(135deg, var(--dark-green) 0%, #0d3d1a 50%, var(--dark-green) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 40px 20px 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c8a94e' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .crescent {
+            font-size: 60px;
+            margin-bottom: 10px;
+            color: var(--gold);
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--gold-light);
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--sand);
+            margin-bottom: 5px;
+        }
+
+        .hero .subtitle {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 20px;
+        }
+
+        .hero .subtitle-de {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            font-style: italic;
+        }
+
+        /* Live Badge */
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,0,0,0.2);
+            border: 1px solid rgba(255,0,0,0.4);
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            color: #ff6b6b;
+        }
+
+        .live-dot {
+            width: 10px;
+            height: 10px;
+            background: #ff4444;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        /* Progress Section */
+        .progress-section {
+            max-width: 800px;
+            margin: -30px auto 30px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .progress-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+            border: 1px solid rgba(200,169,78,0.2);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .progress-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark-green);
+        }
+
+        .progress-numbers {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--dark-green);
+        }
+
+        .progress-numbers span {
+            color: var(--gold);
+            font-size: 1.8rem;
+        }
+
+        .progress-bar-container {
+            background: #e8e0d0;
+            border-radius: 12px;
+            height: 35px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--dark-green), var(--green), var(--gold));
+            border-radius: 12px;
+            transition: width 1.5s ease-in-out;
+            position: relative;
+            min-width: 0%;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-percentage {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .progress-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 15px 10px;
+            background: var(--light-green);
+            border-radius: 10px;
+        }
+
+        .stat-box.goal {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+        }
+
+        .stat-box.raised {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+        }
+
+        .stat-box.remaining {
+            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+        }
+
+        .stat-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--dark-green);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        /* Package Section */
+        .section {
+            max-width: 800px;
+            margin: 0 auto 30px;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            border: 1px solid rgba(200,169,78,0.15);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark-green);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-subtitle {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 20px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .package-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        .package-table th {
+            background: var(--dark-green);
+            color: var(--gold-light);
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .package-table th:first-child {
+            border-radius: 8px 0 0 0;
+        }
+
+        .package-table th:last-child {
+            border-radius: 0 8px 0 0;
+        }
+
+        .package-table td {
+            padding: 11px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .package-table tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+        .package-table tr:hover {
+            background: var(--light-green);
+        }
+
+        .package-price {
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--red), #a93226);
+            border-radius: 12px;
+            color: white;
+        }
+
+        .package-price .price {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+        }
+
+        .package-price .price-label {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* Donate Section */
+        .donate-section {
+            text-align: center;
+        }
+
+        .donate-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold), #b8941e);
+            color: var(--dark);
+            padding: 16px 50px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(200,169,78,0.4);
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .donate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(200,169,78,0.5);
+        }
+
+        .paypal-info {
+            background: linear-gradient(135deg, #f0f4ff, #e3e9ff);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .paypal-logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #003087;
+            margin-bottom: 8px;
+        }
+
+        .paypal-email {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            color: #333;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: inline-block;
+            word-break: break-all;
+            border: 2px dashed #003087;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .paypal-email:hover {
+            background: #e3e9ff;
+        }
+
+        .copy-hint {
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 5px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .copied-toast {
+            display: none;
+            background: var(--dark-green);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            animation: fadeInOut 2s;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(10px); }
+            20% { opacity: 1; transform: translateY(0); }
+            80% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-10px); }
+        }
+
+        /* About Section */
+        .about-text {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .about-text p {
+            margin-bottom: 12px;
+        }
+
+        .highlight {
+            color: var(--dark-green);
+            font-weight: 700;
+        }
+
+        /* Last Updated */
+        .last-updated {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.8rem;
+            color: #999;
+            margin-top: 10px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-green);
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 40px;
+            font-size: 0.85rem;
+        }
+
+        .footer a {
+            color: var(--gold-light);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.6rem; }
+            .hero h2 { font-size: 1.1rem; }
+            .progress-stats { grid-template-columns: 1fr; gap: 10px; }
+            .stat-box { padding: 12px; }
+            .progress-card { padding: 20px; }
+            .card { padding: 20px; }
+            .package-price .price { font-size: 1.8rem; }
+            .donate-btn { padding: 14px 35px; font-size: 1.1rem; }
+        }
+
+        /* Counter animation */
+        .count-up {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HERO SECTION ===== -->
+    <header class="hero">
+        <div class="hero-content">
+            <div class="crescent">☪</div>
+            <h1>১,০০০ পরিবারকে ইফতার পৌঁছানো</h1>
+            <h2>এবারের রমজানে আপনার সাহায্য দরকার</h2>
+            <p class="subtitle">বাংলাদেশের অসহায় পরিবারগুলোর জন্য ইফতার সামগ্রী বিতরণ</p>
+            <p class="subtitle-de">Iftar-Pakete für 1.000 bedürftige Familien in Bangladesch</p>
+            <div class="live-badge">
+                <div class="live-dot"></div>
+                LIVE DONATION TRACKER
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== PROGRESS SECTION ===== -->
+    <section class="progress-section">
+        <div class="progress-card">
+            <div class="progress-header">
+                <div class="progress-title">📊 ডোনেশন অগ্রগতি / Donation Progress</div>
+                <div class="progress-numbers">
+                    <span id="familiesSupported">0</span> / 1000
+                </div>
+            </div>
+
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+            </div>
+            <div class="progress-percentage" id="progressPercent">0% families supported</div>
+
+            <div class="progress-stats">
+                <div class="stat-box goal">
+                    <div class="stat-value">€10,000</div>
+                    <div class="stat-label">🎯 লক্ষ্য / Goal</div>
+                </div>
+                <div class="stat-box raised">
+                    <div class="stat-value" id="raisedAmount">€0</div>
+                    <div class="stat-label">✅ সংগৃহীত / Raised</div>
+                </div>
+                <div class="stat-box remaining">
+                    <div class="stat-value" id="remainingAmount">€10,000</div>
+                    <div class="stat-label">⏳ বাকি / Remaining</div>
+                </div>
+            </div>
+
+            <div class="last-updated">Last updated: <span id="lastUpdated">--</span></div>
+        </div>
+    </section>
+
+    <!-- ===== IFTAR PACKAGE SECTION ===== -->
+    <section class="section">
+        <div class="card">
+            <div class="section-title">🎁 ১ টি পরিবারের ইফতার প্যাকেজ</div>
+            <div class="section-subtitle">Iftar package for 1 family (1 month of Ramadan)</div>
+
+            <table class="package-table">
+                <thead>
+                    <tr>
+                        <th>সামগ্রী / Item</th>
+                        <th>পরিমাণ / Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>🌴 খেজুর (Dates)</td><td>১ কেজি (1 kg)</td></tr>
+                    <tr><td>🫘 ছোলা (Chickpeas)</td><td>২ কেজি (2 kg)</td></tr>
+                    <tr><td>🍚 মুড়ি (Puffed Rice)</td><td>১ কেজি (1 kg)</td></tr>
+                    <tr><td>🍲 মসুর ডাল (Lentils)</td><td>২ কেজি (2 kg)</td></tr>
+                    <tr><td>🫙 সয়াবিন তেল (Soybean Oil)</td><td>১ লিটার (1 liter)</td></tr>
+                    <tr><td>🥛 গুড়া দুধ (Milk Powder)</td><td>২৫০ গ্রাম (250 g)</td></tr>
+                    <tr><td>🌾 চিড়া (Flattened Rice)</td><td>২ কেজি (2 kg)</td></tr>
+                </tbody>
+            </table>
+
+            <div class="package-price">
+                <div class="price-label">প্রতি প্যাকেজ মূল্য / Cost per package</div>
+                <div class="price">€10 <span style="font-size:1rem;font-weight:400;">/ per family</span></div>
+                <div class="price-label" style="margin-top:5px;">মাত্র ১০ ইউরো প্রতি প্যাকেজ</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== DONATE SECTION ===== -->
+    <section class="section">
+        <div class="card donate-section">
+            <div class="section-title" style="justify-content:center;">❤️ এখনই ডোনেট করুন / Donate Now</div>
+            <div class="section-subtitle">Every €10 feeds a family for the entire month of Ramadan</div>
+
+            <a href="https://paypal.me/haiderjulfiqur400" target="_blank" class="donate-btn">
+                💝 Donate via PayPal
+            </a>
+
+            <div class="paypal-info">
+                <div class="paypal-logo">Pay<span style="color:#0070ba">Pal</span></div>
+                <div class="paypal-email" onclick="copyEmail()" title="Click to copy">
+                    haiderjulfiqur400@gmail.com
+                </div>
+                <div class="copy-hint">Click to copy email address</div>
+                <div class="copied-toast" id="copiedToast">✓ Copied to clipboard!</div>
+            </div>
+
+            <div style="margin-top: 20px; padding: 15px; background: #fff8e1; border-radius: 10px; font-size: 0.9rem;">
+                <strong>🇩🇪 Spenden aus Deutschland willkommen!</strong><br>
+                Donations from Germany welcome! Send any amount via PayPal.<br>
+                <span style="color: var(--dark-green); font-weight: 600;">€10 = 1 Family | €50 = 5 Families | €100 = 10 Families</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ABOUT SECTION ===== -->
+    <section class="section">
+        <div class="card">
+            <div class="section-title">📖 ক্যাম্পেইন সম্পর্কে / About This Campaign</div>
+            <div class="section-subtitle">Our mission this Ramadan</div>
+            <div class="about-text">
+                <p>
+                    এই রমজানে আমরা বাংলাদেশের <span class="highlight">১,০০০ অসহায় পরিবারকে</span> ইফতার সামগ্রী পৌঁছে দিতে চাই।
+                    প্রতিটি পরিবার পুরো রমজান মাসে প্রয়োজনীয় ইফতার সামগ্রী পাবে।
+                </p>
+                <p>
+                    This Ramadan, we aim to deliver Iftar packages to <span class="highlight">1,000 underprivileged families</span> 
+                    across Bangladesh. Each package provides essential items for the entire month of Ramadan. 
+                    We are collecting donations from <span class="highlight">Germany</span> and distributing in Bangladesh.
+                </p>
+                <p>
+                    🤲 আল্লাহ আপনার দানকে কবুল করুন। <em>May Allah accept your generosity.</em>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <p>রমজান ইফতার ক্যাম্পেইন ২০২৬ | Ramadan Iftar Campaign 2026</p>
+        <p style="margin-top:5px;">পিপাল | Organized by <a href="mailto:haiderjulfiqur400@gmail.com">পিপাল (Pipal)</a></p>
+        <p style="margin-top: 10px; font-size: 0.75rem;">🕌 জাযাকাল্লাহু খাইরান | JazakAllahu Khairan</p>
+    </footer>
+
+    <script>
+    // =============================================================
+    //  ✏️ MANUAL UPDATE SECTION - Change these values to update!
+    // =============================================================
+    
+    const CAMPAIGN_DATA = {
+        // How many families have been supported so far
+        familiesSupported: 0,
+        
+        // OR set by money (each family = €10, so 50 families = €500)
+        // If you set familiesSupported, totalRaised is auto-calculated
+        // If you prefer to set money directly, uncomment the line below:
+        // totalRaised: 500,  // in euros
+        
+        // Last updated date (format: "DD MMM YYYY, HH:MM")
+        lastUpdated: "10 Feb 2026, 12:00",
+    };
+    
+    // =============================================================
+    //  DO NOT EDIT BELOW (unless you know what you're doing)
+    // =============================================================
+
+    const GOAL_FAMILIES = 1000;
+    const COST_PER_FAMILY = 10;
+    const GOAL_AMOUNT = GOAL_FAMILIES * COST_PER_FAMILY;
+
+    function initDashboard() {
+        let families = CAMPAIGN_DATA.familiesSupported || 0;
+        let raised = 0;
+
+        if (CAMPAIGN_DATA.totalRaised !== undefined) {
+            raised = CAMPAIGN_DATA.totalRaised;
+            families = Math.floor(raised / COST_PER_FAMILY);
+        } else {
+            raised = families * COST_PER_FAMILY;
+        }
+
+        const remaining = GOAL_AMOUNT - raised;
+        const percentage = Math.min((families / GOAL_FAMILIES) * 100, 100);
+
+        // Animate progress bar
+        setTimeout(() => {
+            document.getElementById('progressBar').style.width = percentage + '%';
+        }, 300);
+
+        // Animate counter
+        animateCounter('familiesSupported', families);
+        
+        document.getElementById('raisedAmount').textContent = '€' + raised.toLocaleString();
+        document.getElementById('remainingAmount').textContent = '€' + Math.max(0, remaining).toLocaleString();
+        document.getElementById('progressPercent').textContent = percentage.toFixed(1) + '% families supported';
+        document.getElementById('lastUpdated').textContent = CAMPAIGN_DATA.lastUpdated;
+    }
+
+    function animateCounter(elementId, target) {
+        const el = document.getElementById(elementId);
+        const duration = 1500;
+        const start = 0;
+        const startTime = performance.now();
+
+        function update(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            // Ease out
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const current = Math.floor(start + (target - start) * eased);
+            el.textContent = current;
+            if (progress < 1) {
+                requestAnimationFrame(update);
+            } else {
+                el.textContent = target;
+            }
+        }
+        requestAnimationFrame(update);
+    }
+
+    function copyEmail() {
+        navigator.clipboard.writeText('haiderjulfiqur400@gmail.com').then(() => {
+            const toast = document.getElementById('copiedToast');
+            toast.style.display = 'inline-block';
+            setTimeout(() => { toast.style.display = 'none'; }, 2000);
+        });
+    }
+
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', initDashboard);
+    </script>
+
+</body>
+</html>
