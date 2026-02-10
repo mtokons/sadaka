@@ -282,8 +282,11 @@
                 <a href="https://github.com/settings/tokens/new?scopes=repo&description=Sadaka+Admin" target="_blank">Generate token here</a> (select "repo" scope).
             </div>
 
-            <label for="ghToken">🔑 GitHub Token</label>
-            <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxx">
+            <label for="ghToken">🔑 GitHub Token <span id="tokenStatus" style="font-size:0.75rem;color:#a5d6a7;font-weight:400;"></span></label>
+            <div style="display:flex;gap:8px;margin-bottom:20px;">
+                <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxx" style="margin-bottom:0;flex:1;">
+                <button onclick="saveToken()" style="padding:12px 16px;border:none;border-radius:10px;background:#c8a94e;color:#1a1a2e;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'Poppins',sans-serif;">💾 Save</button>
+            </div>
 
             <button class="btn btn-update" onclick="pushUpdate()">🚀 Update Live Website</button>
             <button class="btn btn-preview" onclick="window.open('https://mtokons.github.io/sadaka/','_blank')">👁️ View Live Site</button>
@@ -415,15 +418,23 @@
         }
     }
 
-    // Save token in localStorage for convenience
+    function saveToken() {
+        const token = document.getElementById('ghToken').value.trim();
+        if (token) {
+            localStorage.setItem('sadaka_gh_token', token);
+            const status = document.getElementById('tokenStatus');
+            status.textContent = '✅ Saved permanently!';
+            setTimeout(() => { status.textContent = '(saved)'; }, 3000);
+        }
+    }
+
+    // Load saved token on page load
     window.addEventListener('DOMContentLoaded', () => {
         const saved = localStorage.getItem('sadaka_gh_token');
-        if (saved) document.getElementById('ghToken').value = saved;
-    });
-
-    // Auto-save token
-    document.getElementById('ghToken')?.addEventListener('change', function() {
-        localStorage.setItem('sadaka_gh_token', this.value);
+        if (saved) {
+            document.getElementById('ghToken').value = saved;
+            document.getElementById('tokenStatus').textContent = '(saved)';
+        }
     });
     </script>
 
