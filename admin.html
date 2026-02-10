@@ -378,9 +378,10 @@
         };
 
         try {
-            // Get current file SHA
-            const fileResp = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${DATA_FILE}?ref=${BRANCH}`, {
-                headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+            // Get current file SHA (fresh, no cache)
+            const fileResp = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${DATA_FILE}?ref=${BRANCH}&t=${Date.now()}`, {
+                headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github.v3+json' },
+                cache: 'no-store'
             });
 
             if (!fileResp.ok) {
