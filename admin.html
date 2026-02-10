@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Sadaka Campaign</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #1a1a2e;
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container, .admin-container {
+            max-width: 500px;
+            width: 90%;
+            margin: 30px auto;
+        }
+
+        .admin-container { max-width: 600px; }
+
+        .card {
+            background: #16213e;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            border: 1px solid rgba(200,169,78,0.15);
+        }
+
+        h1 {
+            color: #f0d98c;
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 0.85rem;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #c8a94e;
+            font-size: 0.9rem;
+        }
+
+        input[type="password"],
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #2a2a4a;
+            border-radius: 10px;
+            background: #0f1629;
+            color: #e0e0e0;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #c8a94e;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, #c8a94e, #b8941e);
+            color: #1a1a2e;
+        }
+
+        .btn-login:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(200,169,78,0.3); }
+
+        .btn-update {
+            background: linear-gradient(135deg, #1a5c2a, #2d8a4e);
+            color: white;
+        }
+
+        .btn-update:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(45,138,78,0.3); }
+
+        .btn-preview {
+            background: linear-gradient(135deg, #2a4a7f, #3a6ab5);
+            color: white;
+            margin-top: 10px;
+        }
+
+        .hidden { display: none; }
+
+        .error {
+            color: #ff6b6b;
+            font-size: 0.85rem;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .success {
+            background: #1a5c2a;
+            color: #a5d6a7;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .current-value {
+            background: #0f1629;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #2a2a4a;
+        }
+
+        .current-value .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+        }
+
+        .current-value .val {
+            color: #f0d98c;
+            font-weight: 700;
+        }
+
+        .slider-container {
+            margin-bottom: 20px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            margin: 10px 0;
+            accent-color: #c8a94e;
+        }
+
+        .slider-value {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 800;
+            color: #f0d98c;
+            margin-bottom: 5px;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .calculated {
+            background: #1a3a1a;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            border: 1px solid #2d5a2d;
+        }
+
+        .calculated .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 0;
+        }
+
+        .calculated .val { color: #a5d6a7; font-weight: 600; }
+
+        .lock-icon { font-size: 2.5rem; text-align: center; margin-bottom: 15px; }
+
+        .github-info {
+            background: #0f1629;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 0.8rem;
+            color: #888;
+            border: 1px solid #2a2a4a;
+        }
+
+        .github-info a { color: #c8a94e; }
+
+        .divider {
+            border: none;
+            border-top: 1px solid #2a2a4a;
+            margin: 20px 0;
+        }
+
+        .or-text {
+            text-align: center;
+            color: #666;
+            font-size: 0.8rem;
+            margin: -10px 0 10px;
+            background: #16213e;
+            display: inline-block;
+            padding: 0 15px;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOGIN SCREEN -->
+    <div class="login-container" id="loginScreen">
+        <div class="card">
+            <div class="lock-icon">🔐</div>
+            <h1>Admin Panel</h1>
+            <p class="subtitle">Sadaka Campaign - Donation Manager</p>
+
+            <div class="error hidden" id="loginError">Incorrect password. Try again.</div>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter admin password" onkeydown="if(event.key==='Enter') login()">
+
+            <button class="btn btn-login" onclick="login()">🔓 Login</button>
+        </div>
+    </div>
+
+    <!-- ADMIN PANEL -->
+    <div class="admin-container hidden" id="adminPanel">
+        <div class="card">
+            <h1>📊 Update Donation Progress</h1>
+            <p class="subtitle">Changes will be reflected on the live website</p>
+
+            <div class="success hidden" id="successMsg">✅ Updated successfully! Website will refresh in ~1 min.</div>
+
+            <!-- Current Values -->
+            <label>📋 Current Values</label>
+            <div class="current-value">
+                <div class="row"><span>Families Supported:</span><span class="val" id="currentFamilies">--</span></div>
+                <div class="row"><span>Amount Raised:</span><span class="val" id="currentRaised">--</span></div>
+                <div class="row"><span>Last Updated:</span><span class="val" id="currentDate">--</span></div>
+            </div>
+
+            <!-- Slider -->
+            <label for="familySlider">🏠 Families Supported</label>
+            <div class="slider-container">
+                <div class="slider-value" id="sliderDisplay">0</div>
+                <input type="range" id="familySlider" min="0" max="1000" value="0" oninput="updateSlider(this.value)">
+                <div class="slider-labels"><span>0</span><span>250</span><span>500</span><span>750</span><span>1000</span></div>
+            </div>
+
+            <hr class="divider">
+            <div class="or-text">OR enter exact number</div>
+
+            <label for="familyInput">Enter Families Count</label>
+            <input type="number" id="familyInput" min="0" max="1000" placeholder="e.g. 150" oninput="updateFromInput(this.value)">
+
+            <!-- Calculated Preview -->
+            <div class="calculated">
+                <div class="row"><span>💰 Amount Raised:</span><span class="val" id="previewRaised">€0</span></div>
+                <div class="row"><span>📊 Progress:</span><span class="val" id="previewPercent">0%</span></div>
+                <div class="row"><span>⏳ Remaining:</span><span class="val" id="previewRemaining">€10,000</span></div>
+            </div>
+
+            <!-- GitHub Token -->
+            <div class="github-info">
+                ℹ️ This uses the <a href="https://github.com/settings/tokens" target="_blank">GitHub API</a> to update data.json in your repo.
+                <a href="https://github.com/settings/tokens/new?scopes=repo&description=Sadaka+Admin" target="_blank">Generate token here</a> (select "repo" scope).
+            </div>
+
+            <label for="ghToken">🔑 GitHub Token</label>
+            <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxx">
+
+            <button class="btn btn-update" onclick="pushUpdate()">🚀 Update Live Website</button>
+            <button class="btn btn-preview" onclick="window.open('https://mtokons.github.io/sadaka/','_blank')">👁️ View Live Site</button>
+        </div>
+    </div>
+
+    <script>
+    // ============================================
+    //  Set your admin password here
+    // ============================================
+    const ADMIN_PASSWORD = "sadaka2026";
+
+    const REPO_OWNER = "mtokons";
+    const REPO_NAME = "sadaka";
+    const DATA_FILE = "data.json";
+    const BRANCH = "main";
+
+    let currentData = {};
+
+    function login() {
+        const pwd = document.getElementById('password').value;
+        if (pwd === ADMIN_PASSWORD) {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('adminPanel').classList.remove('hidden');
+            document.body.style.alignItems = 'flex-start';
+            document.body.style.paddingTop = '30px';
+            loadCurrentData();
+        } else {
+            document.getElementById('loginError').classList.remove('hidden');
+        }
+    }
+
+    async function loadCurrentData() {
+        try {
+            const resp = await fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/${DATA_FILE}?t=${Date.now()}`);
+            currentData = await resp.json();
+
+            document.getElementById('currentFamilies').textContent = currentData.familiesSupported;
+            document.getElementById('currentRaised').textContent = '€' + (currentData.familiesSupported * 10).toLocaleString();
+            document.getElementById('currentDate').textContent = currentData.lastUpdated;
+
+            // Set slider & input to current value
+            document.getElementById('familySlider').value = currentData.familiesSupported;
+            document.getElementById('familyInput').value = currentData.familiesSupported;
+            updateSlider(currentData.familiesSupported);
+        } catch (e) {
+            console.error('Failed to load data:', e);
+        }
+    }
+
+    function updateSlider(val) {
+        val = parseInt(val) || 0;
+        document.getElementById('sliderDisplay').textContent = val;
+        document.getElementById('familyInput').value = val;
+        updatePreview(val);
+    }
+
+    function updateFromInput(val) {
+        val = Math.min(1000, Math.max(0, parseInt(val) || 0));
+        document.getElementById('familySlider').value = val;
+        document.getElementById('sliderDisplay').textContent = val;
+        updatePreview(val);
+    }
+
+    function updatePreview(families) {
+        const raised = families * 10;
+        const remaining = 10000 - raised;
+        const percent = ((families / 1000) * 100).toFixed(1);
+        document.getElementById('previewRaised').textContent = '€' + raised.toLocaleString();
+        document.getElementById('previewPercent').textContent = percent + '%';
+        document.getElementById('previewRemaining').textContent = '€' + Math.max(0, remaining).toLocaleString();
+    }
+
+    async function pushUpdate() {
+        const token = document.getElementById('ghToken').value.trim();
+        if (!token) {
+            alert('Please enter your GitHub token');
+            return;
+        }
+
+        const families = parseInt(document.getElementById('familyInput').value) || 0;
+        const now = new Date();
+        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        const lastUpdated = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}, ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+        const newData = {
+            familiesSupported: families,
+            lastUpdated: lastUpdated
+        };
+
+        try {
+            // Get current file SHA
+            const fileResp = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${DATA_FILE}?ref=${BRANCH}`, {
+                headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+            });
+
+            if (!fileResp.ok) throw new Error('Failed to get file info. Check your token permissions.');
+            const fileInfo = await fileResp.json();
+
+            // Update file
+            const content = btoa(unescape(encodeURIComponent(JSON.stringify(newData, null, 4) + '\n')));
+
+            const updateResp = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${DATA_FILE}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${token}`,
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: `Update: ${families} families supported`,
+                    content: content,
+                    sha: fileInfo.sha,
+                    branch: BRANCH
+                })
+            });
+
+            if (!updateResp.ok) throw new Error('Failed to update. Check token permissions (needs "repo" scope).');
+
+            document.getElementById('successMsg').classList.remove('hidden');
+            loadCurrentData();
+
+            setTimeout(() => {
+                document.getElementById('successMsg').classList.add('hidden');
+            }, 5000);
+
+        } catch (e) {
+            alert('Error: ' + e.message);
+        }
+    }
+
+    // Save token in localStorage for convenience
+    window.addEventListener('DOMContentLoaded', () => {
+        const saved = localStorage.getItem('sadaka_gh_token');
+        if (saved) document.getElementById('ghToken').value = saved;
+    });
+
+    // Auto-save token
+    document.getElementById('ghToken')?.addEventListener('change', function() {
+        localStorage.setItem('sadaka_gh_token', this.value);
+    });
+    </script>
+
+</body>
+</html>

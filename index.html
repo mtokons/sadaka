@@ -342,7 +342,7 @@
 
         .donate-btn {
             display: inline-block;
-            background: linear-gradient(135deg, var(--gold), #b8941e);
+            background: linear-gradient(135deg, var(--gold), #f0ead4);
             color: var(--dark);
             padding: 16px 50px;
             border-radius: 50px;
@@ -617,42 +617,22 @@
     </footer>
 
     <script>
-    // =============================================================
-    //  ✏️ MANUAL UPDATE SECTION - Change these values to update!
-    // =============================================================
-    
-    const CAMPAIGN_DATA = {
-        // How many families have been supported so far
-        familiesSupported: 0,
-        
-        // OR set by money (each family = €10, so 50 families = €500)
-        // If you set familiesSupported, totalRaised is auto-calculated
-        // If you prefer to set money directly, uncomment the line below:
-        // totalRaised: 500,  // in euros
-        
-        // Last updated date (format: "DD MMM YYYY, HH:MM")
-        lastUpdated: "10 Feb 2026, 12:00",
-    };
-    
-    // =============================================================
-    //  DO NOT EDIT BELOW (unless you know what you're doing)
-    // =============================================================
-
     const GOAL_FAMILIES = 1000;
     const COST_PER_FAMILY = 10;
     const GOAL_AMOUNT = GOAL_FAMILIES * COST_PER_FAMILY;
 
-    function initDashboard() {
-        let families = CAMPAIGN_DATA.familiesSupported || 0;
-        let raised = 0;
-
-        if (CAMPAIGN_DATA.totalRaised !== undefined) {
-            raised = CAMPAIGN_DATA.totalRaised;
-            families = Math.floor(raised / COST_PER_FAMILY);
-        } else {
-            raised = families * COST_PER_FAMILY;
+    async function initDashboard() {
+        // Fetch live data from data.json (with cache-busting)
+        let data = { familiesSupported: 0, lastUpdated: "--" };
+        try {
+            const resp = await fetch('https://raw.githubusercontent.com/mtokons/sadaka/main/data.json?t=' + Date.now());
+            data = await resp.json();
+        } catch (e) {
+            console.error('Failed to load data.json:', e);
         }
 
+        const families = data.familiesSupported || 0;
+        const raised = families * COST_PER_FAMILY;
         const remaining = GOAL_AMOUNT - raised;
         const percentage = Math.min((families / GOAL_FAMILIES) * 100, 100);
 
@@ -667,7 +647,7 @@
         document.getElementById('raisedAmount').textContent = '€' + raised.toLocaleString();
         document.getElementById('remainingAmount').textContent = '€' + Math.max(0, remaining).toLocaleString();
         document.getElementById('progressPercent').textContent = percentage.toFixed(1) + '% families supported';
-        document.getElementById('lastUpdated').textContent = CAMPAIGN_DATA.lastUpdated;
+        document.getElementById('lastUpdated').textContent = data.lastUpdated;
     }
 
     function animateCounter(elementId, target) {
