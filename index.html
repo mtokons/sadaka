@@ -597,6 +597,80 @@
             font-weight: 700;
         }
 
+        /* Campaign Cards */
+        .campaign-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .campaign-card {
+            background: linear-gradient(135deg, #f8f4e8 0%, #f0eadb 100%);
+            border: 2px solid var(--gold);
+            border-radius: 14px;
+            padding: 25px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .campaign-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold), var(--dark-green), var(--gold));
+        }
+
+        .campaign-card .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .campaign-card .card-title-bn {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--dark-green);
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+
+        .campaign-card .card-title-en {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 12px;
+        }
+
+        .campaign-card .card-price {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--gold);
+            margin-bottom: 5px;
+        }
+
+        .campaign-card .card-desc {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .campaign-card .card-badge {
+            display: inline-block;
+            background: var(--dark-green);
+            color: white;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .campaign-cards { grid-template-columns: 1fr; }
+        }
+
         /* Last Updated */
         .last-updated {
             text-align: center;
@@ -745,6 +819,47 @@
                 <div class="price-label">প্রতি প্যাকেজ মূল্য / Cost per package</div>
                 <div class="price">€10 <span style="font-size:1rem;font-weight:400;">/ per family</span></div>
                 <div class="price-label" style="margin-top:5px;">মাত্র ১০ ইউরো প্রতি প্যাকেজ</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ZAKAT & TUBEWELL SECTION ===== -->
+    <section class="section">
+        <div class="card">
+            <div class="section-title">🌟 আমাদের অন্যান্য কার্যক্রম / Other Initiatives</div>
+            <div class="section-subtitle">More ways to help - Zakat & Clean Water</div>
+
+            <div class="campaign-cards">
+                <!-- Zakat Card -->
+                <div class="campaign-card">
+                    <div class="card-icon">🤲</div>
+                    <div class="card-title-bn">যাকাত সংগ্রহ ও বিতরণ</div>
+                    <div class="card-title-en">Zakat Collection & Distribution</div>
+                    <div class="card-desc">
+                        আপনার <strong style="color:var(--dark-green);">যাকাতের</strong> টাকা সঠিক হকদারদের কাছে পৌঁছে দেওয়া হবে।
+                        বাংলাদেশের অভাবী মানুষদের মাঝে যাকাত বিতরণ করা হবে।
+                    </div>
+                    <div class="card-desc" style="font-size:0.8rem;margin-top:8px;color:#888;font-family:'Poppins',sans-serif;">
+                        Your Zakat will be distributed to the rightful recipients in Bangladesh.
+                    </div>
+                    <div class="card-badge">যাকাত গ্রহণযোগ্য ✓</div>
+                </div>
+
+                <!-- Tubewell Card -->
+                <div class="campaign-card">
+                    <div class="card-icon">💧</div>
+                    <div class="card-title-bn">বিশুদ্ধ পানির টিউবওয়েল</div>
+                    <div class="card-title-en">Fresh Water Tubewell</div>
+                    <div class="card-price">€380</div>
+                    <div class="card-desc">
+                        প্রতিটি <strong style="color:var(--dark-green);">টিউবওয়েলের</strong> মূল্য মাত্র ৩৮০ ইউরো।
+                        যেখানে বিশুদ্ধ পানির প্রয়োজন সেখানে টিউবওয়েল স্থাপন করা হবে।
+                    </div>
+                    <div class="card-desc" style="font-size:0.8rem;margin-top:8px;color:#888;font-family:'Poppins',sans-serif;">
+                        Install a fresh water tubewell where needed. Cost: €380 per tubewell.
+                    </div>
+                    <div class="card-badge">সদকায়ে জারিয়া 💧</div>
+                </div>
             </div>
         </div>
     </section>
