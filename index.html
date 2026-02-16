@@ -523,6 +523,45 @@
             box-shadow: 0 8px 30px rgba(200,169,78,0.5);
         }
 
+        .payment-methods {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 700px) {
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .payment-card {
+            background: linear-gradient(135deg, #f0f4ff, #e3e9ff);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .payment-card.bank-card {
+            background: linear-gradient(135deg, #f0fff4, #e3ffed);
+        }
+
+        .payment-card-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .payment-card-title.paypal-title {
+            color: #003087;
+        }
+
+        .payment-card-title.bank-title {
+            color: var(--dark-green);
+        }
+
         .paypal-info {
             background: linear-gradient(135deg, #f0f4ff, #e3e9ff);
             border-radius: 12px;
@@ -554,6 +593,40 @@
 
         .paypal-email:hover {
             background: #e3e9ff;
+        }
+
+        .bank-detail {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            color: #333;
+            text-align: left;
+            margin-bottom: 8px;
+        }
+
+        .bank-detail .label {
+            font-weight: 600;
+            color: #555;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .bank-detail .value {
+            background: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 2px dashed var(--dark-green);
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: block;
+        }
+
+        .bank-detail .value:hover {
+            background: #e3ffed;
         }
 
         .copy-hint {
@@ -870,22 +943,47 @@
             <div class="section-title" style="justify-content:center;">❤️ এখনই ডোনেট করুন / Donate Now</div>
             <div class="section-subtitle">Every €10 feeds a family for the entire month of Ramadan</div>
 
-            <a href="https://paypal.me/haiderjulfiqur400" target="_blank" class="donate-btn">
-                💝 Donate via PayPal
-            </a>
-
-            <div class="paypal-info">
-                <div class="paypal-logo">Pay<span style="color:#0070ba">Pal</span></div>
-                <div class="paypal-email" onclick="copyEmail()" title="Click to copy">
-                    haiderjulfiqur400@gmail.com
+            <div class="payment-methods">
+                <!-- Bank Transfer -->
+                <div class="payment-card bank-card">
+                    <div class="payment-card-title bank-title">🏦 Bank Transfer</div>
+                    <div class="bank-detail">
+                        <span class="label">Account Holder</span>
+                        <span class="value" onclick="copyText('Muhammad Hasnain', this)" title="Click to copy">Muhammad Hasnain</span>
+                    </div>
+                    <div class="bank-detail">
+                        <span class="label">IBAN</span>
+                        <span class="value" onclick="copyText('DE43120300001081176685', this)" title="Click to copy">DE43 1203 0000 1081 1766 85</span>
+                    </div>
+                    <div class="bank-detail">
+                        <span class="label">BIC / SWIFT</span>
+                        <span class="value" onclick="copyText('BYLADEM1001', this)" title="Click to copy">BYLADEM1001</span>
+                    </div>
+                    <div class="bank-detail">
+                        <span class="label">Reference / Verwendungszweck</span>
+                        <span class="value" onclick="copyText('Donation', this)" title="Click to copy">Donation</span>
+                    </div>
+                    <div class="copy-hint">Click any field to copy</div>
+                    <div class="copied-toast" id="bankCopiedToast">✓ Copied!</div>
                 </div>
-                <div class="copy-hint">Click to copy email address</div>
-                <div class="copied-toast" id="copiedToast">✓ Copied to clipboard!</div>
+
+                <!-- PayPal -->
+                <div class="payment-card">
+                    <div class="payment-card-title paypal-title">Pay<span style="color:#0070ba">Pal</span></div>
+                    <a href="https://paypal.me/haiderjulfiqur400" target="_blank" class="donate-btn" style="margin-bottom:15px; font-size:1rem; padding:12px 30px;">
+                        💝 Donate via PayPal
+                    </a>
+                    <div class="paypal-email" onclick="copyText('haiderjulfiqur400@gmail.com', this)" title="Click to copy">
+                        haiderjulfiqur400@gmail.com
+                    </div>
+                    <div class="copy-hint">Click to copy email address</div>
+                    <div class="copied-toast" id="copiedToast">✓ Copied!</div>
+                </div>
             </div>
 
             <div style="margin-top: 20px; padding: 15px; background: #fff8e1; border-radius: 10px; font-size: 0.9rem;">
                 <strong>🇩🇪 Spenden aus Deutschland willkommen!</strong><br>
-                Donations from Germany welcome! Send any amount via PayPal.<br>
+                Donations from Germany welcome! Send via Bank Transfer or PayPal.<br>
                 <span style="color: var(--dark-green); font-weight: 600;">€10 = 1 Family | €50 = 5 Families | €100 = 10 Families</span>
             </div>
         </div>
@@ -980,11 +1078,15 @@
         requestAnimationFrame(update);
     }
 
-    function copyEmail() {
-        navigator.clipboard.writeText('haiderjulfiqur400@gmail.com').then(() => {
-            const toast = document.getElementById('copiedToast');
-            toast.style.display = 'inline-block';
-            setTimeout(() => { toast.style.display = 'none'; }, 2000);
+    function copyText(text, el) {
+        navigator.clipboard.writeText(text).then(() => {
+            // Find the nearest toast element
+            const parent = el.closest('.payment-card') || el.closest('.donate-section');
+            const toast = parent ? parent.querySelector('.copied-toast') : document.getElementById('copiedToast');
+            if (toast) {
+                toast.style.display = 'inline-block';
+                setTimeout(() => { toast.style.display = 'none'; }, 2000);
+            }
         });
     }
 
