@@ -246,6 +246,29 @@
         }
 
         .info-box a { color: #c8a94e; }
+
+        code {
+            background: #0f1629;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+
+        .settings-btn {
+            background: #2a2a4a;
+            color: #c8a94e;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-left: 10px;
+            transition: background 0.3s;
+        }
+
+        .settings-btn:hover {
+            background: #3a3a5a;
+        }
     </style>
 </head>
 <body>
@@ -259,8 +282,11 @@
 
             <div class="error hidden" id="loginError">Incorrect password. Try again.</div>
 
-            <label for="apiUrl">Backend API URL</label>
-            <input type="text" id="apiUrl" placeholder="http://localhost:3000" value="http://localhost:3000">
+            <label for="apiUrl">🌐 Backend API URL</label>
+            <input type="text" id="apiUrl" placeholder="https://sadaka-backend-production-06b0.up.railway.app" value="https://sadaka-backend-production-06b0.up.railway.app">
+            <div style="font-size:0.75rem;color:#888;margin-top:-15px;margin-bottom:15px;">
+                💡 Use: <code style="color:#c8a94e;">http://localhost:3000</code> for local testing or your Railway URL for production
+            </div>
 
             <label for="password">Password</label>
             <input type="password" id="password" placeholder="Enter admin password" onkeydown="if(event.key==='Enter') login()">
@@ -274,6 +300,7 @@
         <div class="card">
             <h1>📊 Update Donation Progress
                 <span class="status-badge" id="statusBadge">⏳ Connecting...</span>
+                <button class="settings-btn" onclick="changeApiUrl()" title="Change Backend URL">⚙️ Settings</button>
             </h1>
             <p class="subtitle">Real-time updates - changes appear instantly! ⚡</p>
 
@@ -580,6 +607,28 @@
     function openWebsite() {
         const baseUrl = window.location.origin + window.location.pathname.replace('admin-realtime.html', '');
         window.open(baseUrl + 'index.html', '_blank');
+    }
+
+    function changeApiUrl() {
+        const newUrl = prompt('Enter new Backend API URL:', API_URL);
+        if (newUrl && newUrl.trim() !== '') {
+            const trimmedUrl = newUrl.trim();
+            
+            // Disconnect current socket
+            if (socket) {
+                socket.disconnect();
+            }
+            
+            // Update API URL
+            API_URL = trimmedUrl;
+            localStorage.setItem('sadaka_api_url', API_URL);
+            
+            // Reconnect with new URL
+            connectWebSocket();
+            loadCurrentData();
+            
+            showQuickNotification('✅ API URL updated to: ' + trimmedUrl);
+        }
     }
 
     function showError(msg) {
