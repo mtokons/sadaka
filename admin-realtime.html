@@ -282,12 +282,6 @@
 
             <div class="error hidden" id="loginError">Incorrect password. Try again.</div>
 
-            <label for="apiUrl">🌐 Backend API URL</label>
-            <input type="text" id="apiUrl" placeholder="https://sadaka-backend-production-06b0.up.railway.app" value="https://sadaka-backend-production-06b0.up.railway.app">
-            <div style="font-size:0.75rem;color:#888;margin-top:-15px;margin-bottom:15px;">
-                💡 Use: <code style="color:#c8a94e;">http://localhost:3000</code> for local testing or your Railway URL for production
-            </div>
-
             <label for="password">Password</label>
             <input type="password" id="password" placeholder="Enter admin password" onkeydown="if(event.key==='Enter') login()">
 
@@ -375,18 +369,16 @@
 
     function login() {
         const pwd = document.getElementById('password').value;
-        const apiUrl = document.getElementById('apiUrl').value.trim();
         
         if (pwd !== ADMIN_PASSWORD) {
             document.getElementById('loginError').classList.remove('hidden');
             return;
         }
 
-        API_URL = apiUrl;
         currentPassword = pwd;
-
-        // Save API URL
-        localStorage.setItem('sadaka_api_url', API_URL);
+        
+        // Use saved URL or default to production
+        API_URL = localStorage.getItem('sadaka_api_url') || PRODUCTION_URL;
 
         document.getElementById('loginScreen').classList.add('hidden');
         document.getElementById('adminPanel').classList.remove('hidden');
@@ -644,11 +636,7 @@
         setTimeout(() => notif.remove(), 2000);
     }
 
-    // Load saved API URL on page load (defaults to production)
-    window.addEventListener('DOMContentLoaded', () => {
-        const savedUrl = localStorage.getItem('sadaka_api_url') || PRODUCTION_URL;
-        document.getElementById('apiUrl').value = savedUrl;
-    });
+    // API URL is managed via Settings button in admin panel
 
     // Auto-load gallery when admin panel opens
     const origLogin = login;
