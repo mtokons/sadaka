@@ -1029,8 +1029,9 @@
     const COST_PER_FAMILY = 10;
     const GOAL_AMOUNT = GOAL_FAMILIES * COST_PER_FAMILY;
     
-    // Backend API URL - change this to your deployed backend URL
-    const API_URL = 'https://sadaka-backend-production-06b0.up.railway.app';
+    // Backend API - Production Ready (Railway deployment)
+    const PRODUCTION_API = 'https://sadaka-backend-production-06b0.up.railway.app';
+    const API_URL = PRODUCTION_API;  // Always use production
     let socket = null;
     let isInitialLoad = true;
 
