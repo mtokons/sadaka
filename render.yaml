@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: sadaka-backend
+    env: node
+    buildCommand: cd donation-backend && npm install
+    startCommand: cd donation-backend && npm start
+    envVars:
+      - key: MONGODB_URI
+        sync: false
+      - key: ADMIN_PASSWORD
+        value: sadaka2026
+      - key: PORT
+        value: 10000

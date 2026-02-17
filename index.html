@@ -787,6 +787,9 @@
             display: inline-block;
         }
     </style>
+    
+    <!-- Socket.io for real-time updates (optional - graceful fallback if unavailable) -->
+    <script src="https://cdn.socket.io/4.6.1/socket.io.min.js" onerror="console.log('Socket.io CDN unavailable - using polling fallback')"></script>
 </head>
 <body>
 
@@ -1025,33 +1028,129 @@
     const GOAL_FAMILIES = 1000;
     const COST_PER_FAMILY = 10;
     const GOAL_AMOUNT = GOAL_FAMILIES * COST_PER_FAMILY;
+    
+    // Backend API URL - change this to your deployed backend URL
+    const API_URL = 'http://localhost:3000';
+    let socket = null;
+    let isInitialLoad = true;
 
     async function initDashboard() {
-        // Fetch live data from GitHub API (no cache delay)
-        let data = { familiesSupported: 0, lastUpdated: "--" };
+        const data = await loadDonationData();
+        updateDisplay(data, isInitialLoad);
+        isInitialLoad = false;
+        
+        // Try to connect to WebSocket for real-time updates
+        connectWebSocket();
+    }
+
+    async function loadDonationData() {
+        // Try backend API first (instant updates)
+        try {
+            const resp = await fetch(`${API_URL}/api/donation?t=${Date.now()}`, {
+                cache: 'no-store',
+                signal: AbortSignal.timeout(3000) // 3 second timeout
+            });
+            if (resp.ok) {
+                const data = await resp.json();
+                console.log('✅ Loaded from real-time backend');
+                return data;
+            }
+        } catch (e) {
+            console.log('⚠️ Backend not available, trying fallback...');
+        }
+
+        // Fallback 1: Try static data.json file (GitHub Pages)
+        try {
+            const resp = await fetch('data.json?t=' + Date.now(), { cache: 'no-store' });
+            if (resp.ok) {
+                const data = await resp.json();
+                console.log('✅ Loaded from static data.json');
+                return data;
+            }
+        } catch (e) {
+            console.log('⚠️ Static file not available, trying GitHub API...');
+        }
+
+        // Fallback 2: Try GitHub API
         try {
             const resp = await fetch('https://api.github.com/repos/mtokons/sadaka/contents/data.json?ref=main&t=' + Date.now(), {
                 headers: { 'Accept': 'application/vnd.github.v3+json' },
                 cache: 'no-store'
             });
             const fileInfo = await resp.json();
-            data = JSON.parse(atob(fileInfo.content));
+            const data = JSON.parse(atob(fileInfo.content));
+            console.log('✅ Loaded from GitHub API');
+            return data;
         } catch (e) {
-            console.error('Failed to load data.json:', e);
+            console.error('❌ All data sources failed:', e);
         }
 
+        return { familiesSupported: 0, lastUpdated: "--" };
+    }
+
+    function connectWebSocket() {
+        // Only try WebSocket if backend is likely available
+        try {
+            if (typeof io !== 'undefined') {
+                socket = io(API_URL, { 
+                    transports: ['websocket', 'polling'],
+                    timeout: 5000,
+                    reconnectionAttempts: 3
+                });
+
+                socket.on('connect', () => {
+                    console.log('📡 Real-time updates connected');
+                });
+
+                socket.on('donation-update', (data) => {
+                    console.log('⚡ Real-time update received:', data);
+                    updateDisplay(data, false);
+                });
+
+                socket.on('connect_error', () => {
+                    console.log('⚠️ WebSocket unavailable - using polling fallback');
+                    socket.disconnect();
+                    startPolling();
+                });
+            } else {
+                console.log('⚠️ Socket.io not loaded - using polling');
+                startPolling();
+            }
+        } catch (e) {
+            console.log('⚠️ WebSocket error - using polling:', e);
+            startPolling();
+        }
+    }
+
+    function startPolling() {
+        // Poll every 10 seconds as fallback
+        setInterval(async () => {
+            const data = await loadDonationData();
+            updateDisplay(data, false);
+        }, 10000);
+    }
+
+    function updateDisplay(data, animate = true) {
         const families = data.familiesSupported || 0;
         const raised = families * COST_PER_FAMILY;
         const remaining = GOAL_AMOUNT - raised;
         const percentage = Math.min((families / GOAL_FAMILIES) * 100, 100);
 
         // Animate progress bar
-        setTimeout(() => {
+        if (animate) {
+            setTimeout(() => {
+                document.getElementById('progressBar').style.width = percentage + '%';
+            }, 300);
+        } else {
             document.getElementById('progressBar').style.width = percentage + '%';
-        }, 300);
+        }
 
-        // Animate counter
-        animateCounter('familiesSupported', families);
+        // Animate or update counter
+        if (animate) {
+            animateCounter('familiesSupported', families);
+        } else {
+            document.getElementById('familiesSupported').textContent = families;
+        }
         
         document.getElementById('raisedAmount').textContent = '€' + raised.toLocaleString();
         document.getElementById('remainingAmount').textContent = '€' + Math.max(0, remaining).toLocaleString();

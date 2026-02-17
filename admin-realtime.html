@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Sadaka Campaign (Real-Time)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #1a1a2e;
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container, .admin-container {
+            max-width: 500px;
+            width: 90%;
+            margin: 30px auto;
+        }
+
+        .admin-container { max-width: 600px; }
+
+        .card {
+            background: #16213e;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            border: 1px solid rgba(200,169,78,0.15);
+        }
+
+        h1 {
+            color: #f0d98c;
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 0.85rem;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #c8a94e;
+            font-size: 0.9rem;
+        }
+
+        input[type="password"],
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #2a2a4a;
+            border-radius: 10px;
+            background: #0f1629;
+            color: #e0e0e0;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #c8a94e;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, #c8a94e, #b8941e);
+            color: #1a1a2e;
+        }
+
+        .btn-login:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(200,169,78,0.3); }
+
+        .btn-update {
+            background: linear-gradient(135deg, #1a5c2a, #2d8a4e);
+            color: white;
+        }
+
+        .btn-update:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(45,138,78,0.3); }
+
+        .btn-preview {
+            background: linear-gradient(135deg, #2a4a7f, #3a6ab5);
+            color: white;
+            margin-top: 10px;
+        }
+
+        .hidden { display: none; }
+
+        .error {
+            color: #ff6b6b;
+            font-size: 0.85rem;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .success {
+            background: #1a5c2a;
+            color: #a5d6a7;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .current-value {
+            background: #0f1629;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #2a2a4a;
+        }
+
+        .current-value .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+        }
+
+        .current-value .val {
+            color: #f0d98c;
+            font-weight: 700;
+        }
+
+        .slider-container {
+            margin-bottom: 20px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            margin: 10px 0;
+            accent-color: #c8a94e;
+        }
+
+        .slider-value {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 800;
+            color: #f0d98c;
+            margin-bottom: 5px;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .calculated {
+            background: #1a3a1a;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            border: 1px solid #2d5a2d;
+        }
+
+        .calculated .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 0;
+        }
+
+        .calculated .val { color: #a5d6a7; font-weight: 600; }
+
+        .lock-icon { font-size: 2.5rem; text-align: center; margin-bottom: 15px; }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .status-online {
+            background: #1a5c2a;
+            color: #a5d6a7;
+        }
+
+        .status-offline {
+            background: #5c1a1a;
+            color: #f5a5a5;
+        }
+
+        .api-url-input {
+            background: #0f1629;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #2a2a4a;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid #2a2a4a;
+            margin: 20px 0;
+        }
+
+        .or-text {
+            text-align: center;
+            color: #666;
+            font-size: 0.8rem;
+            margin: -10px 0 10px;
+            background: #16213e;
+            display: inline-block;
+            padding: 0 15px;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .info-box {
+            background: #0f1629;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 0.8rem;
+            color: #888;
+            border: 1px solid #2a2a4a;
+        }
+
+        .info-box a { color: #c8a94e; }
+    </style>
+</head>
+<body>
+
+    <!-- LOGIN SCREEN -->
+    <div class="login-container" id="loginScreen">
+        <div class="card">
+            <div class="lock-icon">🔐</div>
+            <h1>Admin Panel</h1>
+            <p class="subtitle">Sadaka Campaign - Real-Time Edition ⚡</p>
+
+            <div class="error hidden" id="loginError">Incorrect password. Try again.</div>
+
+            <label for="apiUrl">Backend API URL</label>
+            <input type="text" id="apiUrl" placeholder="http://localhost:3000" value="http://localhost:3000">
+
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter admin password" onkeydown="if(event.key==='Enter') login()">
+
+            <button class="btn btn-login" onclick="login()">🔓 Login</button>
+        </div>
+    </div>
+
+    <!-- ADMIN PANEL -->
+    <div class="admin-container hidden" id="adminPanel">
+        <div class="card">
+            <h1>📊 Update Donation Progress
+                <span class="status-badge" id="statusBadge">⏳ Connecting...</span>
+            </h1>
+            <p class="subtitle">Real-time updates - changes appear instantly! ⚡</p>
+
+            <div class="success hidden" id="successMsg">✅ Updated successfully! All devices updated instantly.</div>
+
+            <!-- Current Values -->
+            <label>📋 Current Values</label>
+            <div class="current-value">
+                <div class="row"><span>Families Supported:</span><span class="val" id="currentFamilies">--</span></div>
+                <div class="row"><span>Amount Raised:</span><span class="val" id="currentRaised">--</span></div>
+                <div class="row"><span>Last Updated:</span><span class="val" id="currentDate">--</span></div>
+            </div>
+
+            <!-- Slider -->
+            <label for="familySlider">🏠 Families Supported</label>
+            <div class="slider-container">
+                <div class="slider-value" id="sliderDisplay">0</div>
+                <input type="range" id="familySlider" min="0" max="1000" value="0" oninput="updateSlider(this.value)">
+                <div class="slider-labels"><span>0</span><span>250</span><span>500</span><span>750</span><span>1000</span></div>
+            </div>
+
+            <hr class="divider">
+            <div class="or-text">OR enter exact number</div>
+
+            <label for="familyInput">Enter Families Count</label>
+            <input type="number" id="familyInput" min="0" max="1000" placeholder="e.g. 150" oninput="updateFromInput(this.value)">
+
+            <!-- Calculated Preview -->
+            <div class="calculated">
+                <div class="row"><span>💰 Amount Raised:</span><span class="val" id="previewRaised">€0</span></div>
+                <div class="row"><span>📊 Progress:</span><span class="val" id="previewPercent">0%</span></div>
+                <div class="row"><span>⏳ Remaining:</span><span class="val" id="previewRemaining">€10,000</span></div>
+            </div>
+
+            <button class="btn btn-update" onclick="pushUpdate()">🚀 Update Live Website (Instant!)</button>
+            <button class="btn btn-preview" onclick="openWebsite()">👁️ View Live Site</button>
+
+            <!-- GALLERY MANAGEMENT -->
+            <hr style="border:none;border-top:1px solid #2a2a4a;margin:25px 0;">
+            <h1 style="font-size:1.2rem;margin-bottom:15px;">📸 Gallery Management</h1>
+
+            <label for="photoUrl">🖼️ Photo URL</label>
+            <input type="text" id="photoUrl" placeholder="https://i.imgur.com/xxxxx.jpg">
+
+            <label for="photoCaption">📝 Caption</label>
+            <input type="text" id="photoCaption" placeholder="Iftar distribution in Dhaka">
+
+            <button class="btn btn-update" onclick="addPhoto()" style="background:linear-gradient(135deg,#c8a94e,#b8941e);color:#1a1a2e;">📸 Add Photo to Gallery</button>
+
+            <div class="success hidden" id="gallerySuccess">✅ Photo added! Gallery updated instantly.</div>
+
+            <div id="galleryList" style="margin-top:20px;"></div>
+
+            <!-- Info -->
+            <div class="info-box" style="margin-top:20px;">
+                ℹ️ <strong>Real-time backend required!</strong><br>
+                Make sure the backend server is running. See <a href="donation-backend/README.md" target="_blank">backend README</a> for setup.
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+    <script>
+    // ============================================
+    //  Configuration
+    // ============================================
+    const ADMIN_PASSWORD = "sadaka2026";
+    let API_URL = "http://localhost:3000";
+    let socket = null;
+    let currentPassword = "";
+
+    function login() {
+        const pwd = document.getElementById('password').value;
+        const apiUrl = document.getElementById('apiUrl').value.trim();
+        
+        if (pwd !== ADMIN_PASSWORD) {
+            document.getElementById('loginError').classList.remove('hidden');
+            return;
+        }
+
+        API_URL = apiUrl;
+        currentPassword = pwd;
+
+        // Save API URL
+        localStorage.setItem('sadaka_api_url', API_URL);
+
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('adminPanel').classList.remove('hidden');
+        document.body.style.alignItems = 'flex-start';
+        document.body.style.paddingTop = '30px';
+
+        connectWebSocket();
+        loadCurrentData();
+    }
+
+    function connectWebSocket() {
+        try {
+            socket = io(API_URL);
+
+            socket.on('connect', () => {
+                console.log('✅ WebSocket connected');
+                updateStatus(true);
+            });
+
+            socket.on('disconnect', () => {
+                console.log('❌ WebSocket disconnected');
+                updateStatus(false);
+            });
+
+            socket.on('donation-update', (data) => {
+                console.log('📡 Real-time update received:', data);
+                updateCurrentDisplay(data);
+                showQuickNotification('✨ Live update received!');
+            });
+
+            socket.on('gallery-update', (data) => {
+                console.log('📸 Gallery update:', data);
+                loadGalleryAdmin();
+            });
+
+        } catch (e) {
+            console.error('WebSocket error:', e);
+            updateStatus(false);
+        }
+    }
+
+    function updateStatus(online) {
+        const badge = document.getElementById('statusBadge');
+        if (online) {
+            badge.textContent = '🟢 Live';
+            badge.className = 'status-badge status-online';
+        } else {
+            badge.textContent = '🔴 Offline';
+            badge.className = 'status-badge status-offline';
+        }
+    }
+
+    async function loadCurrentData() {
+        try {
+            const resp = await fetch(`${API_URL}/api/donation?t=${Date.now()}`);
+            const data = await resp.json();
+            updateCurrentDisplay(data);
+
+            // Set slider & input to current value
+            document.getElementById('familySlider').value = data.familiesSupported;
+            document.getElementById('familyInput').value = data.familiesSupported;
+            updateSlider(data.familiesSupported);
+        } catch (e) {
+            console.error('Failed to load data:', e);
+            showError('Failed to connect to backend');
+        }
+    }
+
+    function updateCurrentDisplay(data) {
+        document.getElementById('currentFamilies').textContent = data.familiesSupported;
+        document.getElementById('currentRaised').textContent = '€' + (data.familiesSupported * 10).toLocaleString();
+        document.getElementById('currentDate').textContent = data.lastUpdated;
+    }
+
+    function updateSlider(val) {
+        val = parseInt(val) || 0;
+        document.getElementById('sliderDisplay').textContent = val;
+        document.getElementById('familyInput').value = val;
+        updatePreview(val);
+    }
+
+    function updateFromInput(val) {
+        val = Math.min(1000, Math.max(0, parseInt(val) || 0));
+        document.getElementById('familySlider').value = val;
+        document.getElementById('sliderDisplay').textContent = val;
+        updatePreview(val);
+    }
+
+    function updatePreview(families) {
+        const raised = families * 10;
+        const remaining = 10000 - raised;
+        const percent = ((families / 1000) * 100).toFixed(1);
+        document.getElementById('previewRaised').textContent = '€' + raised.toLocaleString();
+        document.getElementById('previewPercent').textContent = percent + '%';
+        document.getElementById('previewRemaining').textContent = '€' + Math.max(0, remaining).toLocaleString();
+    }
+
+    async function pushUpdate() {
+        const families = parseInt(document.getElementById('familyInput').value) || 0;
+        const now = new Date();
+        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        const lastUpdated = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}, ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+        try {
+            const resp = await fetch(`${API_URL}/api/donation/update`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    password: currentPassword,
+                    familiesSupported: families,
+                    lastUpdated: lastUpdated
+                })
+            });
+
+            const result = await resp.json();
+
+            if (!resp.ok) {
+                throw new Error(result.error || 'Update failed');
+            }
+
+            document.getElementById('successMsg').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('successMsg').classList.add('hidden');
+            }, 3000);
+
+        } catch (e) {
+            showError('Error: ' + e.message);
+        }
+    }
+
+    async function loadGalleryAdmin() {
+        try {
+            const resp = await fetch(`${API_URL}/api/gallery?t=${Date.now()}`);
+            const photos = await resp.json();
+
+            const list = document.getElementById('galleryList');
+            if (!photos.length) {
+                list.innerHTML = '<p style="color:#666;font-size:0.85rem;text-align:center;">No photos yet</p>';
+                return;
+            }
+
+            list.innerHTML = '<label style="margin-bottom:10px;display:block;">🖼️ Current Photos (' + photos.length + ')</label>' +
+                photos.map((p) => `
+                    <div style="display:flex;align-items:center;gap:10px;padding:8px;background:#0f1629;border-radius:8px;margin-bottom:8px;">
+                        <img src="${p.url}" style="width:50px;height:50px;object-fit:cover;border-radius:6px;">
+                        <div style="flex:1;font-size:0.8rem;color:#ccc;">${p.caption || 'No caption'}<br><span style="color:#888;">${p.date || ''}</span></div>
+                        <button onclick="deletePhoto('${p._id}')" style="padding:6px 10px;border:none;border-radius:6px;background:#c0392b;color:white;cursor:pointer;font-size:0.75rem;">🗑️</button>
+                    </div>
+                `).join('');
+        } catch (e) {
+            console.error('Failed to load gallery:', e);
+        }
+    }
+
+    async function addPhoto() {
+        const url = document.getElementById('photoUrl').value.trim();
+        const caption = document.getElementById('photoCaption').value.trim();
+
+        if (!url) {
+            showError('Enter a photo URL');
+            return;
+        }
+
+        try {
+            const now = new Date();
+            const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            const date = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+
+            const resp = await fetch(`${API_URL}/api/gallery/add`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    password: currentPassword,
+                    url: url,
+                    caption: caption,
+                    date: date
+                })
+            });
+
+            const result = await resp.json();
+
+            if (!resp.ok) {
+                throw new Error(result.error || 'Failed to add photo');
+            }
+
+            document.getElementById('photoUrl').value = '';
+            document.getElementById('photoCaption').value = '';
+            document.getElementById('gallerySuccess').classList.remove('hidden');
+            setTimeout(() => document.getElementById('gallerySuccess').classList.add('hidden'), 3000);
+            loadGalleryAdmin();
+
+        } catch (e) {
+            showError('Error: ' + e.message);
+        }
+    }
+
+    async function deletePhoto(id) {
+        if (!confirm('Delete this photo?')) return;
+
+        try {
+            const resp = await fetch(`${API_URL}/api/gallery/${id}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password: currentPassword })
+            });
+
+            const result = await resp.json();
+
+            if (!resp.ok) {
+                throw new Error(result.error || 'Failed to delete');
+            }
+
+            loadGalleryAdmin();
+        } catch (e) {
+            showError('Error: ' + e.message);
+        }
+    }
+
+    function openWebsite() {
+        const baseUrl = window.location.origin + window.location.pathname.replace('admin-realtime.html', '');
+        window.open(baseUrl + 'index.html', '_blank');
+    }
+
+    function showError(msg) {
+        alert(msg);
+    }
+
+    function showQuickNotification(msg) {
+        const notif = document.createElement('div');
+        notif.textContent = msg;
+        notif.style.cssText = 'position:fixed;top:20px;right:20px;background:#1a5c2a;color:#a5d6a7;padding:12px 20px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.3);z-index:1000;font-size:0.9rem;';
+        document.body.appendChild(notif);
+        setTimeout(() => notif.remove(), 2000);
+    }
+
+    // Load saved API URL on page load
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedUrl = localStorage.getItem('sadaka_api_url');
+        if (savedUrl) {
+            document.getElementById('apiUrl').value = savedUrl;
+        }
+    });
+
+    // Auto-load gallery when admin panel opens
+    const origLogin = login;
+    login = function() {
+        origLogin();
+        setTimeout(loadGalleryAdmin, 1000);
+    };
+    </script>
+
+</body>
+</html>
