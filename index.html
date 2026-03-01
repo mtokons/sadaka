@@ -287,11 +287,18 @@
 
         /* Progress Section */
         .progress-section {
-            max-width: 800px;
+            max-width: 1100px;
             margin: -30px auto 30px;
             padding: 0 20px;
             position: relative;
             z-index: 2;
+        }
+
+        .home-update-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 20px;
+            align-items: stretch;
         }
 
         .progress-card {
@@ -300,6 +307,130 @@
             padding: 30px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.12);
             border: 1px solid rgba(200,169,78,0.2);
+            height: 100%;
+        }
+
+        .update-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+            border: 1px solid rgba(200,169,78,0.2);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .update-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--dark-green);
+            margin-bottom: 6px;
+        }
+
+        .update-subtitle {
+            font-size: 0.78rem;
+            color: #888;
+            margin-bottom: 14px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .slideshow-frame {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #f6f1e4;
+            aspect-ratio: 4 / 3;
+            border: 1px solid rgba(200,169,78,0.25);
+        }
+
+        .slide-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .slide-empty {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #6b6b6b;
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+
+        .slide-overlay {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 12px;
+            background: linear-gradient(180deg, transparent, rgba(0,0,0,0.75));
+            color: #fff;
+        }
+
+        .slide-caption {
+            font-size: 0.85rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .slide-date {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.72rem;
+            opacity: 0.9;
+            margin-top: 2px;
+        }
+
+        .slide-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 10px;
+            gap: 10px;
+        }
+
+        .slide-nav-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .slide-nav {
+            border: 0;
+            background: var(--dark-green);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .slide-nav:hover {
+            background: var(--green);
+            transform: translateY(-1px);
+        }
+
+        .slide-counter {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .slide-gallery-link {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.8rem;
+            color: var(--dark-green);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .slide-gallery-link:hover {
+            text-decoration: underline;
         }
 
         .progress-header {
@@ -780,6 +911,13 @@
             .card { padding: 20px; }
             .package-price .price { font-size: 1.8rem; }
             .donate-btn { padding: 14px 35px; font-size: 1.1rem; }
+            .update-card { padding: 20px; }
+        }
+
+        @media (max-width: 920px) {
+            .home-update-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Counter animation */
@@ -835,35 +973,61 @@
 
     <!-- ===== PROGRESS SECTION ===== -->
     <section class="progress-section">
-        <div class="progress-card">
-            <div class="progress-header">
-                <div class="progress-title">📊 ডোনেশন অগ্রগতি / Donation Progress</div>
-                <div class="progress-numbers">
-                    <span id="familiesSupported">0</span> / 1000
+        <div class="home-update-grid">
+            <div class="progress-card">
+                <div class="progress-header">
+                    <div class="progress-title">📊 ডোনেশন অগ্রগতি / Donation Progress</div>
+                    <div class="progress-numbers">
+                        <span id="familiesSupported">0</span> / 1000
+                    </div>
                 </div>
+
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+                </div>
+                <div class="progress-percentage" id="progressPercent">0% families supported</div>
+
+                <div class="progress-stats">
+                    <div class="stat-box goal">
+                        <div class="stat-value">€10,000</div>
+                        <div class="stat-label">🎯 লক্ষ্য / Goal</div>
+                    </div>
+                    <div class="stat-box raised">
+                        <div class="stat-value" id="raisedAmount">€0</div>
+                        <div class="stat-label">✅ সংগৃহীত / Raised</div>
+                    </div>
+                    <div class="stat-box remaining">
+                        <div class="stat-value" id="remainingAmount">€10,000</div>
+                        <div class="stat-label">⏳ বাকি / Remaining</div>
+                    </div>
+                </div>
+
+                <div class="last-updated">Last updated: <span id="lastUpdated">--</span></div>
             </div>
 
-            <div class="progress-bar-container">
-                <div class="progress-bar" id="progressBar" style="width: 0%"></div>
-            </div>
-            <div class="progress-percentage" id="progressPercent">0% families supported</div>
+            <div class="update-card">
+                <div class="update-title">📸 চলমান প্রজেক্ট আপডেট / Current Project Updates</div>
+                <div class="update-subtitle">Latest shopping and distribution pictures</div>
 
-            <div class="progress-stats">
-                <div class="stat-box goal">
-                    <div class="stat-value">€10,000</div>
-                    <div class="stat-label">🎯 লক্ষ্য / Goal</div>
+                <div class="slideshow-frame">
+                    <img id="updateSlideImage" class="slide-image" alt="Project update image" style="display:none;">
+                    <div id="slideEmpty" class="slide-empty">ছবি আপডেট খুব শীঘ্রই আসছে ইনশাআল্লাহ।</div>
+
+                    <div class="slide-overlay" id="slideOverlay" style="display:none;">
+                        <div class="slide-caption" id="slideCaption"></div>
+                        <div class="slide-date" id="slideDate"></div>
+                    </div>
                 </div>
-                <div class="stat-box raised">
-                    <div class="stat-value" id="raisedAmount">€0</div>
-                    <div class="stat-label">✅ সংগৃহীত / Raised</div>
-                </div>
-                <div class="stat-box remaining">
-                    <div class="stat-value" id="remainingAmount">€10,000</div>
-                    <div class="stat-label">⏳ বাকি / Remaining</div>
+
+                <div class="slide-controls">
+                    <div class="slide-nav-group">
+                        <button class="slide-nav" type="button" onclick="changeSlide(-1)" aria-label="Previous slide">◀</button>
+                        <button class="slide-nav" type="button" onclick="changeSlide(1)" aria-label="Next slide">▶</button>
+                    </div>
+                    <div class="slide-counter" id="slideCounter">0 / 0</div>
+                    <a href="gallery.html" class="slide-gallery-link">View full gallery ↗</a>
                 </div>
             </div>
-
-            <div class="last-updated">Last updated: <span id="lastUpdated">--</span></div>
         </div>
     </section>
 
@@ -1034,6 +1198,9 @@
     const API_URL = PRODUCTION_API;  // Always use production
     let socket = null;
     let isInitialLoad = true;
+    let slideshowItems = [];
+    let currentSlide = 0;
+    let slideshowTimer = null;
 
     async function initDashboard() {
         const data = await loadDonationData();
@@ -1157,6 +1324,76 @@
         document.getElementById('remainingAmount').textContent = '€' + Math.max(0, remaining).toLocaleString();
         document.getElementById('progressPercent').textContent = percentage.toFixed(1) + '% families supported';
         document.getElementById('lastUpdated').textContent = data.lastUpdated;
+
+        await loadSlideshowItems();
+    }
+
+    async function loadSlideshowItems() {
+        let galleryItems = [];
+        try {
+            const resp = await fetch('https://api.github.com/repos/mtokons/sadaka/contents/gallery.json?ref=main&t=' + Date.now(), {
+                headers: { 'Accept': 'application/vnd.github.v3+json' },
+                cache: 'no-store'
+            });
+            if (resp.ok) {
+                const fileInfo = await resp.json();
+                galleryItems = JSON.parse(atob(fileInfo.content));
+            }
+        } catch (e) {
+            console.error('Failed to load gallery.json:', e);
+        }
+
+        slideshowItems = Array.isArray(galleryItems) ? galleryItems.filter(item => item && item.url) : [];
+        currentSlide = 0;
+        renderSlide();
+        restartSlideshowTimer();
+    }
+
+    function renderSlide() {
+        const imageEl = document.getElementById('updateSlideImage');
+        const emptyEl = document.getElementById('slideEmpty');
+        const overlayEl = document.getElementById('slideOverlay');
+        const captionEl = document.getElementById('slideCaption');
+        const dateEl = document.getElementById('slideDate');
+        const counterEl = document.getElementById('slideCounter');
+
+        if (!slideshowItems.length) {
+            imageEl.style.display = 'none';
+            overlayEl.style.display = 'none';
+            emptyEl.style.display = 'flex';
+            counterEl.textContent = '0 / 0';
+            return;
+        }
+
+        const slide = slideshowItems[currentSlide];
+        imageEl.src = slide.url;
+        imageEl.alt = slide.caption || 'Project update image';
+        imageEl.style.display = 'block';
+        emptyEl.style.display = 'none';
+        overlayEl.style.display = 'block';
+        captionEl.textContent = slide.caption || 'Current project update';
+        dateEl.textContent = slide.date || '';
+        counterEl.textContent = `${currentSlide + 1} / ${slideshowItems.length}`;
+    }
+
+    function changeSlide(step) {
+        if (!slideshowItems.length) return;
+        currentSlide = (currentSlide + step + slideshowItems.length) % slideshowItems.length;
+        renderSlide();
+        restartSlideshowTimer();
+    }
+
+    function restartSlideshowTimer() {
+        if (slideshowTimer) {
+            clearInterval(slideshowTimer);
+            slideshowTimer = null;
+        }
+        if (slideshowItems.length > 1) {
+            slideshowTimer = setInterval(() => {
+                currentSlide = (currentSlide + 1) % slideshowItems.length;
+                renderSlide();
+            }, 4500);
+        }
     }
 
     function animateCounter(elementId, target) {
