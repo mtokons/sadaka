@@ -356,6 +356,21 @@
         </div>
     </div>
 
+    <!-- ===== SLIDER IMAGE UPLOAD SECTION ===== -->
+    <div class="card" style="margin-top:30px;">
+        <h2 style="color:#c8a94e;text-align:center;margin-bottom:10px;">Upload Activity Photo for Homepage Slider</h2>
+        <form id="sliderUploadForm" enctype="multipart/form-data">
+            <label for="sliderImage">Select Image:</label>
+            <input type="file" id="sliderImage" name="sliderImage" accept="image/*" required>
+            <label for="sliderCaption">Caption (Bangla):</label>
+            <input type="text" id="sliderCaption" name="sliderCaption" placeholder="ছবির ক্যাপশন লিখুন" required>
+            <label for="sliderDate">Date:</label>
+            <input type="date" id="sliderDate" name="sliderDate" required>
+            <button class="btn btn-update" type="submit">Upload Photo</button>
+        </form>
+        <div id="sliderUploadStatus" style="margin-top:10px;font-size:0.95rem;"></div>
+    </div>
+
     <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
     <script>
     // ============================================
@@ -644,6 +659,48 @@
         origLogin();
         setTimeout(loadGalleryAdmin, 1000);
     };
+
+    // Slider image upload logic
+    const sliderUploadForm = document.getElementById('sliderUploadForm');
+    if (sliderUploadForm) {
+        sliderUploadForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const fileInput = document.getElementById('sliderImage');
+            const captionInput = document.getElementById('sliderCaption');
+            const dateInput = document.getElementById('sliderDate');
+            const statusDiv = document.getElementById('sliderUploadStatus');
+            const file = fileInput.files[0];
+            if (!file) { statusDiv.textContent = 'Please select an image.'; return; }
+            statusDiv.textContent = 'Uploading...';
+            // Convert image to base64
+            const reader = new FileReader();
+            reader.onload = async function(evt) {
+                const base64 = evt.target.result;
+                // Prepare payload
+                const payload = {
+                    url: base64,
+                    caption: captionInput.value,
+                    date: dateInput.value
+                };
+                // Send to backend
+                try {
+                    const resp = await fetch('/api/upload-slider', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (resp.ok) {
+                        statusDiv.textContent = 'Photo uploaded successfully!';
+                    } else {
+                        statusDiv.textContent = 'Upload failed.';
+                    }
+                } catch (err) {
+                    statusDiv.textContent = 'Error uploading photo.';
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+    }
     </script>
 
 </body>
