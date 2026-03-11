@@ -994,7 +994,7 @@
                     </div>
                     <div class="stat-box raised">
                         <div class="stat-value" id="raisedAmount">€0</div>
-                        <div class="stat-label">✅ সংগৃহীত / Raised</div>
+                        <div class="stat-label">✅ সংগ্রহ / Raised</div>
                     </div>
                     <div class="stat-box remaining">
                         <div class="stat-value" id="remainingAmount">€10,000</div>
@@ -1300,7 +1300,7 @@
         }, 10000);
     }
 
-    function updateDisplay(data, animate = true) {
+    async function updateDisplay(data, animate = true) {
         const families = data.familiesSupported || 0;
         const raised = families * COST_PER_FAMILY;
         const remaining = GOAL_AMOUNT - raised;
