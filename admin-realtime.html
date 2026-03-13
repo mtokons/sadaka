@@ -1,4 +1,43 @@
 <!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>অ্যাডমিন - সাদাকা</title>
+  <style>
+    body{font-family:'Poppins',sans-serif;background:#1a1a2e;color:#eaeaea;margin:0;display:flex;align-items:flex-start;justify-content:center;padding:20px}
+    .card{background:#16213e;padding:20px;border-radius:12px;max-width:700px;width:100%}
+    label{display:block;margin-top:10px;color:#c8a94e}
+    input,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #2a2a4a;background:#0f1629;color:#eaeaea}
+    .btn{background:#c8a94e;color:#14221a;padding:10px 12px;border-radius:8px;border:none;font-weight:700;margin-top:10px}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2 style="color:#f0d98c">অ্যাডমিন প্যানেল</h2>
+    <div>
+      <label>পাসওয়ার্ড</label>
+      <input id="pwd" type="password" placeholder="অ্যাডমিন পাসওয়ার্ড">
+      <button class="btn" onclick="login()">লগইন</button>
+    </div>
+
+    <div id="manage" style="display:none;margin-top:16px">
+      <label>গ্যালারি ছবি URL</label>
+      <input id="photoUrl" placeholder="https://...">
+      <label>ক্যাপশন</label>
+      <input id="photoCap" placeholder="ক্যাপশন লিখুন">
+      <button class="btn" onclick="addPhoto()">ছবি যোগ করুন</button>
+    </div>
+  </div>
+
+  <script>
+    const ADMIN_PASSWORD = 'sadaka2026';
+    function login(){ if(document.getElementById('pwd').value===ADMIN_PASSWORD){ document.getElementById('manage').style.display='block'; alert('লগইন সফল'); } else { alert('পাসওয়ার্ড ভুল'); }}
+    function addPhoto(){ alert('অ্যাডমিন: ছবি যোগ করার অনুরোধ পাঠানো হয়েছে (ব্যাকএন্ড সংযুক্তি প্রয়োজন)'); }
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
