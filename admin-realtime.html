@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - Sadaka Campaign (Real-Time)</title>
+    <title>অ্যাডমিন প্যানেল - সাদাকা (রিয়েল-টাইম)</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -277,31 +277,31 @@
     <div class="login-container" id="loginScreen">
         <div class="card">
             <div class="lock-icon">🔐</div>
-            <h1>Admin Panel</h1>
-            <p class="subtitle">Sadaka Campaign - Real-Time Edition ⚡</p>
+            <h1>অ্যাডমিন প্যানেল</h1>
+            <p class="subtitle">সাদাকা ক্যাম্পেইন - রিয়েল-টাইম ⚡</p>
 
-            <div class="error hidden" id="loginError">Incorrect password. Try again.</div>
+            <div class="error hidden" id="loginError">পাসওয়ার্ড ভুল। আবার চেষ্টা করুন।</div>
 
-            <label for="password">Password</label>
-            <input type="password" id="password" placeholder="Enter admin password" onkeydown="if(event.key==='Enter') login()">
+            <label for="password">পাসওয়ার্ড</label>
+            <input type="password" id="password" placeholder="অ্যাডমিন পাসওয়ার্ড লিখুন" onkeydown="if(event.key==='Enter') login()">
 
-            <button class="btn btn-login" onclick="login()">🔓 Login</button>
+            <button class="btn btn-login" onclick="login()">🔓 লগইন</button>
         </div>
     </div>
 
     <!-- ADMIN PANEL -->
     <div class="admin-container hidden" id="adminPanel">
         <div class="card">
-            <h1>📊 Update Donation Progress
-                <span class="status-badge" id="statusBadge">⏳ Connecting...</span>
-                <button class="settings-btn" onclick="changeApiUrl()" title="Change Backend URL">⚙️ Settings</button>
+            <h1>📊 ডোনেশন আপডেট
+                <span class="status-badge" id="statusBadge">⏳ সংযুক্ত হচ্ছে...</span>
+                <button class="settings-btn" onclick="changeApiUrl()" title="বেকএন্ড URL পরিবর্তন">⚙️ সেটিংস</button>
             </h1>
-            <p class="subtitle">Real-time updates - changes appear instantly! ⚡</p>
+            <p class="subtitle">রিয়েল-টাইম আপডেট — পরিবর্তন মুহূর্তে প্রদর্শিত হবে ⚡</p>
 
-            <div class="success hidden" id="successMsg">✅ Updated successfully! All devices updated instantly.</div>
+            <div class="success hidden" id="successMsg">✅ সফলভাবে আপডেট হয়েছে! সকল ডিভাইসে আপডেট দেখানো হবে।</div>
 
             <!-- Current Values -->
-            <label>📋 Current Values</label>
+            <label>📋 বর্তমান তথ্য</label>
             <div class="current-value">
                 <div class="row"><span>Families Supported:</span><span class="val" id="currentFamilies">--</span></div>
                 <div class="row"><span>Amount Raised:</span><span class="val" id="currentRaised">--</span></div>
@@ -309,7 +309,7 @@
             </div>
 
             <!-- Slider -->
-            <label for="familySlider">🏠 Families Supported</label>
+            <label for="familySlider">🏠 সহায়তাপ্রাপ্ত পরিবার</label>
             <div class="slider-container">
                 <div class="slider-value" id="sliderDisplay">0</div>
                 <input type="range" id="familySlider" min="0" max="1000" value="0" oninput="updateSlider(this.value)">
@@ -317,56 +317,56 @@
             </div>
 
             <hr class="divider">
-            <div class="or-text">OR enter exact number</div>
+            <div class="or-text">অথবা সঠিক সংখ্যা লিখুন</div>
 
-            <label for="familyInput">Enter Families Count</label>
-            <input type="number" id="familyInput" min="0" max="1000" placeholder="e.g. 150" oninput="updateFromInput(this.value)">
+            <label for="familyInput">পরিবারের সংখ্যা লিখুন</label>
+            <input type="number" id="familyInput" min="0" max="1000" placeholder="যেমন: ১৫০" oninput="updateFromInput(this.value)">
 
             <!-- Calculated Preview -->
             <div class="calculated">
-                <div class="row"><span>💰 Amount Raised:</span><span class="val" id="previewRaised">€0</span></div>
-                <div class="row"><span>📊 Progress:</span><span class="val" id="previewPercent">0%</span></div>
-                <div class="row"><span>⏳ Remaining:</span><span class="val" id="previewRemaining">€10,000</span></div>
+                <div class="row"><span>💰 সংগৃহীত অর্থ:</span><span class="val" id="previewRaised">€0</span></div>
+                <div class="row"><span>📊 অগ্রগতি:</span><span class="val" id="previewPercent">0%</span></div>
+                <div class="row"><span>⏳ বাকি:</span><span class="val" id="previewRemaining">€10,000</span></div>
             </div>
 
-            <button class="btn btn-update" onclick="pushUpdate()">🚀 Update Live Website (Instant!)</button>
-            <button class="btn btn-preview" onclick="openWebsite()">👁️ View Live Site</button>
+            <button class="btn btn-update" onclick="pushUpdate()">🚀 সরাসরি ওয়েবসাইট আপডেট করুন</button>
+            <button class="btn btn-preview" onclick="openWebsite()">👁️ ওয়েবসাইট দেখুন</button>
 
             <!-- GALLERY MANAGEMENT -->
             <hr style="border:none;border-top:1px solid #2a2a4a;margin:25px 0;">
-            <h1 style="font-size:1.2rem;margin-bottom:15px;">📸 Gallery Management</h1>
+            <h1 style="font-size:1.2rem;margin-bottom:15px;">📸 গ্যালারি ব্যবস্থাপনা</h1>
 
-            <label for="photoUrl">🖼️ Photo URL</label>
+            <label for="photoUrl">🖼️ ছবির URL</label>
             <input type="text" id="photoUrl" placeholder="https://i.imgur.com/xxxxx.jpg">
 
-            <label for="photoCaption">📝 Caption</label>
-            <input type="text" id="photoCaption" placeholder="Iftar distribution in Dhaka">
+            <label for="photoCaption">📝 ক্যাপশন</label>
+            <input type="text" id="photoCaption" placeholder="ঢাকায় ইফতার বিতরণ">
 
-            <button class="btn btn-update" onclick="addPhoto()" style="background:linear-gradient(135deg,#c8a94e,#b8941e);color:#1a1a2e;">📸 Add Photo to Gallery</button>
+            <button class="btn btn-update" onclick="addPhoto()" style="background:linear-gradient(135deg,#c8a94e,#b8941e);color:#1a1a2e;">📸 গ্যালারিতে ছবি যোগ করুন</button>
 
-            <div class="success hidden" id="gallerySuccess">✅ Photo added! Gallery updated instantly.</div>
+            <div class="success hidden" id="gallerySuccess">✅ ছবি যুক্ত হয়েছে! গ্যালারি আপডেট হয়েছে।</div>
 
             <div id="galleryList" style="margin-top:20px;"></div>
 
             <!-- Info -->
             <div class="info-box" style="margin-top:20px;">
-                ℹ️ <strong>Real-time backend required!</strong><br>
-                Make sure the backend server is running. See <a href="donation-backend/README.md" target="_blank">backend README</a> for setup.
+                ℹ️ <strong>রিয়েল-টাইম বেকএন্ড দরকার</strong><br>
+                নিশ্চিত করুন বেকএন্ড সার্ভার চালু আছে। সেটআপ দেখতে দেখুন <a href="donation-backend/README.md" target="_blank">বেকএন্ড README</a>।
             </div>
         </div>
     </div>
 
     <!-- ===== SLIDER IMAGE UPLOAD SECTION ===== -->
     <div class="card" style="margin-top:30px;">
-        <h2 style="color:#c8a94e;text-align:center;margin-bottom:10px;">Upload Activity Photo for Homepage Slider</h2>
+        <h2 style="color:#c8a94e;text-align:center;margin-bottom:10px;">হোমপেজ স্লাইডারের জন্য কার্যক্রমের ছবি আপলোড</h2>
         <form id="sliderUploadForm" enctype="multipart/form-data">
-            <label for="sliderImage">Select Image:</label>
+            <label for="sliderImage">ছবি নির্বাচন করুন:</label>
             <input type="file" id="sliderImage" name="sliderImage" accept="image/*" required>
-            <label for="sliderCaption">Caption (Bangla):</label>
+            <label for="sliderCaption">ক্যাপশন (বাংলা):</label>
             <input type="text" id="sliderCaption" name="sliderCaption" placeholder="ছবির ক্যাপশন লিখুন" required>
-            <label for="sliderDate">Date:</label>
+            <label for="sliderDate">তারিখ:</label>
             <input type="date" id="sliderDate" name="sliderDate" required>
-            <button class="btn btn-update" type="submit">Upload Photo</button>
+            <button class="btn btn-update" type="submit">ছবি আপলোড করুন</button>
         </form>
         <div id="sliderUploadStatus" style="margin-top:10px;font-size:0.95rem;"></div>
     </div>
@@ -376,7 +376,7 @@
     // ============================================
     //  Configuration
     // ============================================
-    const ADMIN_PASSWORD = "sadaka2026";
+            const ADMIN_PASSWORD = "sadaka2026";
     const PRODUCTION_URL = "https://sadaka-backend-production-06b0.up.railway.app";
     let API_URL = PRODUCTION_URL;
     let socket = null;
